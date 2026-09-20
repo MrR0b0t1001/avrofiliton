@@ -1,0 +1,587 @@
+:root {
+  --nav-height: 5.25rem;
+
+  /*
+   * Avrofiliton palette
+   *
+   * Warm rather than clinical.
+   * Designed to work with food, wood, stone and old photographs.
+   */
+  --nav-bg: #f7f2e9;
+  --nav-bg-translucent: rgba(247, 242, 233, 0.96);
+
+  --nav-text: #2d2924;
+  --nav-text-soft: #756d64;
+  --nav-text-on-hero: #fffdf8;
+
+  --nav-accent: #995e3d;
+  --nav-accent-hover: #7d492f;
+  --nav-accent-soft: rgba(153, 94, 61, 0.1);
+
+  --nav-border: rgba(58, 48, 39, 0.12);
+  --nav-border-strong: rgba(58, 48, 39, 0.22);
+
+  --nav-shadow: 0 8px 30px rgba(35, 28, 22, 0.08);
+  --nav-drawer-shadow: -16px 0 50px rgba(28, 22, 18, 0.18);
+
+  /*
+   * Load the actual brand font globally.
+   *
+   * "Allura" is only an example.
+   * This variable means the Navbar does not care where the font comes from.
+   */
+  --font-brand: "Allura", "Segoe Script", cursive;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Header                                                                     */
+/* -------------------------------------------------------------------------- */
+
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  width: 100%;
+  height: var(--nav-height);
+  z-index: 1200;
+
+  background: transparent;
+  border-bottom: 1px solid transparent;
+
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.headerScrolled {
+  background: var(--nav-bg-translucent);
+  border-bottom-color: var(--nav-border);
+  box-shadow: var(--nav-shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.headerInner {
+  width: min(90%, 88rem);
+  height: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Brand                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  color: var(--nav-text-on-hero);
+  text-decoration: none;
+
+  flex-shrink: 0;
+
+  transition:
+    color 220ms ease,
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.brand:hover {
+  transform: translateY(-1px);
+}
+
+.brandName {
+  font-family: var(--font-brand);
+  font-size: clamp(2rem, 2.4vw, 2.55rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: 0.015em;
+}
+
+.brandSince {
+  margin-top: 0.32rem;
+  margin-left: 0.18rem;
+
+  font-size: 0.59rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  opacity: 0.76;
+}
+
+.headerScrolled .brand {
+  color: var(--nav-text);
+}
+
+.headerScrolled .brandSince {
+  color: var(--nav-accent);
+  opacity: 0.9;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Desktop navigation                                                         */
+/* -------------------------------------------------------------------------- */
+
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.desktopLinks {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.6rem, 2.6vw, 2.8rem);
+}
+
+.navLink {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.55rem 0;
+
+  color: var(--nav-text-on-hero);
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.035em;
+
+  text-decoration: none;
+
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.headerScrolled .navLink {
+  color: var(--nav-text);
+}
+
+.navLink:hover {
+  color: #ffffff;
+}
+
+.headerScrolled .navLink:hover {
+  color: var(--nav-accent);
+}
+
+/*
+ * The underline is intentionally understated.
+ *
+ * A historic restaurant does not need an animated gradient line.
+ */
+.navLink:not(.navCta)::after {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+
+  width: 0;
+  height: 1px;
+
+  background: currentColor;
+
+  transform: translateX(-50%);
+
+  transition: width 180ms ease;
+}
+
+.navLink:not(.navCta):hover::after,
+.navLink.activeLink:not(.navCta)::after {
+  width: 100%;
+}
+
+.activeLink {
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reservation CTA                                                            */
+/* -------------------------------------------------------------------------- */
+
+.navCta {
+  padding: 0.8rem 1.15rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 0.2rem;
+
+  background: rgba(20, 16, 13, 0.08);
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.navCta:hover {
+  color: #ffffff;
+
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.86);
+
+  transform: translateY(-1px);
+}
+
+.headerScrolled .navCta {
+  color: #fffdf8;
+
+  background: var(--nav-accent);
+  border-color: var(--nav-accent);
+}
+
+.headerScrolled .navCta:hover {
+  color: #ffffff;
+
+  background: var(--nav-accent-hover);
+  border-color: var(--nav-accent-hover);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile menu button                                                         */
+/* -------------------------------------------------------------------------- */
+
+.mobileToggle {
+  width: 2.85rem;
+  height: 2.85rem;
+
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+
+  background: rgba(20, 16, 13, 0.08);
+  color: var(--nav-text-on-hero);
+
+  cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.mobileToggle:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.menuLine {
+  width: 1.05rem;
+  height: 1px;
+
+  display: block;
+
+  background: currentColor;
+}
+
+.headerScrolled .mobileToggle {
+  color: var(--nav-text);
+
+  background: transparent;
+  border-color: var(--nav-border-strong);
+}
+
+.headerScrolled .mobileToggle:hover {
+  border-color: var(--nav-accent);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Overlay                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1250;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+
+  background: rgba(24, 19, 15, 0.5);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 240ms ease,
+    visibility 240ms ease;
+}
+
+.overlayOpen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile drawer                                                              */
+/* -------------------------------------------------------------------------- */
+
+.mobileDrawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  z-index: 1300;
+
+  width: min(88vw, 23rem);
+  height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1.4rem 1.35rem 1.6rem;
+
+  background: var(--nav-bg);
+  border-left: 1px solid var(--nav-border);
+
+  box-shadow: var(--nav-drawer-shadow);
+
+  transform: translateX(100%);
+
+  transition: transform 260ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobileDrawerOpen {
+  transform: translateX(0);
+}
+
+.mobileTop {
+  min-height: 4.2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 1.15rem;
+
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.mobileBrand {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileBrandName {
+  color: var(--nav-text);
+
+  font-family: var(--font-brand);
+  font-size: 2.15rem;
+  line-height: 0.9;
+}
+
+.mobileBrandSince {
+  margin-top: 0.4rem;
+
+  color: var(--nav-accent);
+
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+.mobileClose {
+  width: 2.5rem;
+  height: 2.5rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  color: var(--nav-text);
+
+  border: 1px solid var(--nav-border);
+  border-radius: 50%;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.mobileClose:hover {
+  color: var(--nav-accent);
+  border-color: var(--nav-accent);
+
+  transform: rotate(4deg);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile links                                                               */
+/* -------------------------------------------------------------------------- */
+
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 1.6rem;
+}
+
+.mobileLinks .navLink {
+  width: 100%;
+
+  padding: 1rem 0;
+
+  color: var(--nav-text);
+
+  font-size: 1.05rem;
+  font-weight: 500;
+
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.mobileLinks .navLink::after {
+  display: none;
+}
+
+.mobileLinks .navLink:hover {
+  color: var(--nav-accent);
+}
+
+.mobileLinks .activeLink {
+  color: var(--nav-accent);
+}
+
+.mobileLinks .navCta {
+  justify-content: center;
+
+  margin-top: 1.5rem;
+  padding: 0.95rem 1rem;
+
+  color: #fffdf8;
+
+  border: 1px solid var(--nav-accent);
+  border-radius: 0.2rem;
+
+  background: var(--nav-accent);
+}
+
+.mobileLinks .navCta:hover {
+  color: #ffffff;
+
+  background: var(--nav-accent-hover);
+  border-color: var(--nav-accent-hover);
+}
+
+.mobileFooter {
+  margin-top: auto;
+  padding-top: 1.4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  color: var(--nav-text-soft);
+
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+
+  border-top: 1px solid var(--nav-border);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Focus                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.brand:focus-visible,
+.navLink:focus-visible,
+.mobileToggle:focus-visible,
+.mobileClose:focus-visible {
+  outline: 2px solid var(--nav-accent);
+  outline-offset: 4px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Responsive                                                                 */
+/* -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 860px) {
+  .desktopLinks {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 861px) {
+  .overlay,
+  .mobileDrawer {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  :root {
+    --nav-height: 4.75rem;
+  }
+
+  .headerInner {
+    width: 90%;
+  }
+
+  .brandName {
+    font-size: 2rem;
+  }
+
+  .brandSince {
+    font-size: 0.52rem;
+  }
+
+  .mobileDrawer {
+    width: min(91vw, 22rem);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reduced motion                                                             */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .brand,
+  .navLink,
+  .navCta,
+  .mobileToggle,
+  .overlay,
+  .mobileDrawer,
+  .mobileClose {
+    transition: none;
+  }
+
+  :global(html) {
+    scroll-behavior: auto;
+  }
+}

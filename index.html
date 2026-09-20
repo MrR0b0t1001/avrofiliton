@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avrofiliton Restaurant | Platanias, Chania</title>
+    <meta
+      name="description"
+      content="Avrofiliton is a family-owned restaurant in the heart of Platanias, Chania, serving Cretan dishes, mezedes and Greek favourites since 1910."
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="%BASE_URL%images/avrofiliton-hero.avif"
+      type="image/avif"
+      fetchpriority="high"
+    />
+    <style>
+      :root {
+        --nav-height: 5.25rem;
+        --font-body:
+          system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+          sans-serif;
+        --font-display: Georgia, "Times New Roman", serif;
+        --font-brand: "Segoe Script", cursive;
+        --color-background: #f7f2e9;
+        --color-surface: #fffdf8;
+        --color-text: #2d2924;
+        --color-text-muted: #756d64;
+        --color-accent: #995e3d;
+        --color-accent-dark: #7d492f;
+        --color-border: rgba(58, 48, 39, 0.12);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body,
+      #root {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: var(--nav-height);
+      }
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        font-family: var(--font-body);
+        color: var(--color-text);
+        background: var(--color-background);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+      }
+      #root {
+        min-height: 100vh;
+      }
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+      a {
+        color: inherit;
+      }
+      ::selection {
+        color: #fffdf8;
+        background: var(--color-accent);
+      }
+      @media screen and (max-width: 640px) {
+        :root {
+          --nav-height: 4.75rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
