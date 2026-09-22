@@ -1,0 +1,402 @@
+.section {
+  --stories-background: #29231e;
+  --stories-text: #fffdf8;
+  --stories-muted: rgba(255, 253, 248, 0.66);
+  --stories-soft: rgba(255, 253, 248, 0.38);
+  --stories-border: rgba(255, 253, 248, 0.14);
+  --stories-accent: #c58b69;
+
+  padding: clamp(5rem, 9vw, 8rem) 0;
+
+  background: var(--stories-background);
+  color: var(--stories-text);
+}
+
+.container {
+  width: min(90%, 88rem);
+
+  margin: 0 auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Intro                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.intro {
+  max-width: 42rem;
+
+  margin-bottom: clamp(5rem, 10vw, 8rem);
+}
+
+.eyebrow {
+  margin: 0 0 0.8rem;
+
+  color: var(--stories-accent);
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1;
+
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 4vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1;
+
+  letter-spacing: -0.03em;
+}
+
+.introText {
+  max-width: 31rem;
+
+  margin: 1.15rem 0 0;
+
+  color: var(--stories-muted);
+
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Stories                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.stories {
+  display: flex;
+  flex-direction: column;
+
+  gap: clamp(7rem, 13vw, 12rem);
+}
+
+.story {
+  display: grid;
+  grid-template-columns:
+    minmax(17rem, 25rem)
+    minmax(20rem, 32rem);
+
+  align-items: center;
+  justify-content: start;
+
+  gap: clamp(4rem, 9vw, 9rem);
+}
+
+/*
+ * Second row reverses the visual hierarchy.
+ *
+ * We don't change the markup order because keeping the image first
+ * produces a simpler and more predictable mobile experience.
+ */
+.storyReversed {
+  grid-template-columns:
+    minmax(20rem, 32rem)
+    minmax(17rem, 25rem);
+
+  justify-content: end;
+}
+
+.storyReversed .imageColumn {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.storyReversed .storyContent {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Image                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.imageColumn {
+  width: 100%;
+}
+
+.image,
+.imagePlaceholder {
+  width: 100%;
+
+  aspect-ratio: 4 / 5;
+
+  display: block;
+
+  border-radius: 0.1rem;
+}
+
+.image {
+  object-fit: cover;
+
+  background: #342d27;
+}
+
+/*
+ * Temporary placeholder.
+ *
+ * Once the actual plate photos are available this entire visual
+ * disappears automatically.
+ */
+.imagePlaceholder {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  overflow: hidden;
+
+  padding: 1.6rem;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(197, 139, 105, 0.16),
+      transparent 38%
+    ),
+    linear-gradient(145deg, #40372f 0%, #322a24 50%, #211c18 100%);
+
+  border: 1px solid rgba(255, 253, 248, 0.08);
+}
+
+.imagePlaceholder::before {
+  content: "";
+
+  position: absolute;
+  inset: 0.8rem;
+
+  border: 1px solid rgba(255, 253, 248, 0.07);
+
+  pointer-events: none;
+}
+
+.placeholderName {
+  position: relative;
+
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  font-weight: 400;
+  line-height: 1;
+
+  letter-spacing: -0.025em;
+}
+
+.placeholderText {
+  position: relative;
+
+  margin-top: 0.6rem;
+
+  color: var(--stories-muted);
+
+  font-size: 0.58rem;
+  font-weight: 600;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Story content                                                              */
+/* -------------------------------------------------------------------------- */
+
+.storyContent {
+  max-width: 32rem;
+}
+
+.storyMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  margin-bottom: 2rem;
+
+  color: var(--stories-soft);
+
+  font-size: 0.62rem;
+  font-weight: 600;
+
+  letter-spacing: 0.15em;
+}
+
+.storyNumber {
+  color: var(--stories-accent);
+}
+
+.storyRule {
+  width: 2.2rem;
+  height: 1px;
+
+  background: var(--stories-border);
+}
+
+.dishName {
+  margin: 0 0 0.75rem;
+
+  color: var(--stories-accent);
+
+  font-size: 0.67rem;
+  font-weight: 600;
+  line-height: 1;
+
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.storyHeading {
+  max-width: 27rem;
+
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 3.4vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1;
+
+  letter-spacing: -0.035em;
+
+  text-wrap: balance;
+}
+
+.storyBody {
+  max-width: 31rem;
+
+  margin-top: 1.7rem;
+}
+
+.storyBody p {
+  margin: 0;
+
+  color: var(--stories-muted);
+
+  font-size: 0.94rem;
+  line-height: 1.75;
+}
+
+.storyBody p + p {
+  margin-top: 1rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Subtle alternating alignment                                               */
+/* -------------------------------------------------------------------------- */
+
+.storyReversed .storyContent {
+  justify-self: end;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Tablet                                                                     */
+/* -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 900px) {
+  .intro {
+    margin-bottom: 5rem;
+  }
+
+  .stories {
+    gap: 7rem;
+  }
+
+  .story,
+  .storyReversed {
+    grid-template-columns:
+      minmax(15rem, 22rem)
+      minmax(18rem, 1fr);
+
+    gap: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .storyReversed .imageColumn {
+    grid-column: 2;
+  }
+
+  .storyReversed .storyContent {
+    grid-column: 1;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile                                                                     */
+/* -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 680px) {
+  .section {
+    padding: 4.5rem 0;
+  }
+
+  .container {
+    width: 90%;
+  }
+
+  .intro {
+    margin-bottom: 4rem;
+  }
+
+  .title {
+    font-size: clamp(2.2rem, 10vw, 2.9rem);
+  }
+
+  .introText {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .stories {
+    gap: 5.5rem;
+  }
+
+  /*
+   * The desktop zig-zag becomes a consistent vertical reading
+   * order on smaller screens.
+   */
+  .story,
+  .storyReversed {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 1.8rem;
+  }
+
+  .storyReversed .imageColumn,
+  .storyReversed .storyContent {
+    order: initial;
+  }
+
+  .imageColumn {
+    width: min(82%, 22rem);
+  }
+
+  .image,
+  .imagePlaceholder {
+    aspect-ratio: 4 / 5;
+  }
+
+  .storyContent {
+    max-width: 34rem;
+  }
+
+  .storyMeta {
+    margin-bottom: 1.4rem;
+  }
+
+  .storyHeading {
+    max-width: 23rem;
+
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+
+  .storyBody {
+    margin-top: 1.35rem;
+  }
+
+  .storyBody p {
+    font-size: 0.9rem;
+    line-height: 1.68;
+  }
+}

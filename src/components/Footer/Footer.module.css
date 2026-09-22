@@ -1,0 +1,360 @@
+.footer {
+  --footer-bg: #1f1a17;
+  --footer-text: #fffdf8;
+  --footer-muted: rgba(255, 253, 248, 0.58);
+  --footer-soft: rgba(255, 253, 248, 0.38);
+  --footer-border: rgba(255, 253, 248, 0.12);
+  --footer-accent: #c58b69;
+
+  padding: clamp(4.5rem, 8vw, 7rem) 0 2rem;
+
+  background: var(--footer-bg);
+  color: var(--footer-text);
+}
+
+.container {
+  width: min(90%, 88rem);
+
+  margin: 0 auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Main                                                                       */
+/* -------------------------------------------------------------------------- */
+
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(16rem, 0.8fr);
+  gap: clamp(4rem, 9vw, 9rem);
+
+  padding-bottom: clamp(3.5rem, 6vw, 5rem);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Brand                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.brandColumn {
+  max-width: 38rem;
+}
+
+.brand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  color: var(--footer-text);
+  text-decoration: none;
+}
+
+.brandName {
+  font-family: var(--font-brand);
+  font-size: clamp(3rem, 5.5vw, 5rem);
+  font-weight: 400;
+  line-height: 0.85;
+
+  letter-spacing: 0.01em;
+}
+
+.brandSince {
+  margin-top: 0.65rem;
+  margin-left: 0.25rem;
+
+  color: var(--footer-accent);
+
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1;
+
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.brandText {
+  max-width: 27rem;
+
+  margin: 1.8rem 0 0;
+
+  color: var(--footer-muted);
+
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Visit                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.visitColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.columnLabel {
+  margin: 0 0 1.2rem;
+
+  color: var(--footer-accent);
+
+  font-size: 0.64rem;
+  font-weight: 600;
+  line-height: 1;
+
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  color: var(--footer-muted);
+
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.phone {
+  margin-top: 1.5rem;
+
+  color: var(--footer-text);
+
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+
+  text-decoration: none;
+
+  transition: color 180ms ease;
+}
+
+.phone:hover {
+  color: var(--footer-accent);
+}
+
+.externalLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+
+  margin-top: 1.8rem;
+}
+
+.externalLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  color: var(--footer-muted);
+
+  font-size: 0.78rem;
+  font-weight: 500;
+
+  letter-spacing: 0.03em;
+
+  text-decoration: none;
+
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.externalLinks a:hover {
+  color: var(--footer-text);
+
+  transform: translateX(2px);
+}
+
+.externalLinks span {
+  color: var(--footer-accent);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Navigation                                                                 */
+/* -------------------------------------------------------------------------- */
+
+.navigation {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+
+  padding: 1.8rem 0;
+
+  border-top: 1px solid var(--footer-border);
+  border-bottom: 1px solid var(--footer-border);
+}
+
+.navigation a {
+  position: relative;
+
+  padding: 0.3rem 0;
+
+  color: var(--footer-muted);
+
+  font-size: 0.76rem;
+  font-weight: 500;
+
+  letter-spacing: 0.05em;
+
+  text-decoration: none;
+
+  transition: color 180ms ease;
+}
+
+.navigation a::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background: var(--footer-accent);
+
+  transform: scaleX(0);
+  transform-origin: left;
+
+  transition: transform 180ms ease;
+}
+
+.navigation a:hover {
+  color: var(--footer-text);
+}
+
+.navigation a:hover::after {
+  transform: scaleX(1);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Bottom                                                                     */
+/* -------------------------------------------------------------------------- */
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  padding-top: 1.7rem;
+
+  color: var(--footer-soft);
+
+  font-size: 0.67rem;
+  font-weight: 500;
+
+  letter-spacing: 0.06em;
+}
+
+.bottom p {
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Focus                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.brand:focus-visible,
+.phone:focus-visible,
+.externalLinks a:focus-visible,
+.navigation a:focus-visible {
+  outline: 2px solid var(--footer-accent);
+  outline-offset: 4px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Tablet                                                                     */
+/* -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 760px) {
+  .main {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .brandText {
+    max-width: 31rem;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile                                                                     */
+/* -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 540px) {
+  .footer {
+    padding: 4rem 0 1.7rem;
+  }
+
+  .container {
+    width: 90%;
+  }
+
+  .main {
+    gap: 3.2rem;
+
+    padding-bottom: 3rem;
+  }
+
+  .brandName {
+    font-size: clamp(3rem, 16vw, 4.3rem);
+  }
+
+  .brandText {
+    margin-top: 1.5rem;
+
+    font-size: 0.9rem;
+  }
+
+  .phone {
+    font-size: 1.25rem;
+  }
+
+  .navigation {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 0;
+
+    padding: 1.2rem 0;
+  }
+
+  .navigation a {
+    width: 100%;
+
+    padding: 0.75rem 0;
+  }
+
+  .navigation a::after {
+    display: none;
+  }
+
+  .bottom {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 0.5rem;
+
+    padding-top: 1.4rem;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reduced motion                                                             */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .phone,
+  .externalLinks a,
+  .navigation a,
+  .navigation a::after {
+    transition: none;
+  }
+
+  .externalLinks a:hover {
+    transform: none;
+  }
+}
