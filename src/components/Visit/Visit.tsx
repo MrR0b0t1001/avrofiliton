@@ -18,8 +18,8 @@ const LONGITUDE = 23.9098423;
  * display: +30 28210 12345
  * href: tel:+302821012345
  */
-const PHONE_DISPLAY = "+30 28210 XXXXX";
-const PHONE_HREF = "tel:+3028210XXXXX";
+const PHONE_DISPLAY = "+30 697 723 104";
+const PHONE_HREF = "tel:+30697723104";
 
 const Visit = () => {
   const [viewMode, setViewMode] = useState<ViewMode>("map");

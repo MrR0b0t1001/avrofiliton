@@ -1,0 +1,406 @@
+.testimonials {
+  --testimonial-bg: #f7f2e9;
+  --testimonial-text: #2d2924;
+  --testimonial-muted: #756d64;
+
+  --testimonial-accent: #995e3d;
+  --testimonial-accent-hover: #7d492f;
+
+  --testimonial-border: rgba(58, 48, 39, 0.14);
+
+  padding: clamp(5rem, 9vw, 8rem) 0;
+
+  background: var(--testimonial-bg);
+  color: var(--testimonial-text);
+}
+
+.container {
+  width: min(90%, 88rem);
+
+  margin: 0 auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Intro                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.intro {
+  max-width: 42rem;
+
+  margin-bottom: clamp(4rem, 8vw, 6.5rem);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+
+  color: var(--testimonial-accent);
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1;
+
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4vw, 3.7rem);
+  font-weight: 400;
+  line-height: 1;
+
+  letter-spacing: -0.03em;
+}
+
+.introText {
+  max-width: 32rem;
+
+  margin: 1.2rem 0 0;
+
+  color: var(--testimonial-muted);
+
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Guestbook entries                                                          */
+/* -------------------------------------------------------------------------- */
+
+.entries {
+  border-top: 1px solid var(--testimonial-border);
+}
+
+.entry {
+  padding: clamp(3rem, 6vw, 5rem) 0;
+
+  border-bottom: 1px solid var(--testimonial-border);
+}
+
+.entryInner {
+  width: min(100%, 48rem);
+}
+
+.entryReversed .entryInner {
+  margin-left: auto;
+}
+
+.entryNumber {
+  margin: 0 0 1.5rem;
+
+  color: var(--testimonial-accent);
+
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1;
+
+  letter-spacing: 0.17em;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Quote                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.quote {
+  position: relative;
+
+  margin: 0;
+  padding: 0;
+}
+
+.quote::before {
+  content: "“";
+
+  position: absolute;
+  top: -1.4rem;
+  left: -0.15rem;
+
+  color: rgba(153, 94, 61, 0.13);
+
+  font-family: var(--font-display);
+  font-size: 5rem;
+  font-weight: 400;
+  line-height: 1;
+
+  pointer-events: none;
+}
+
+.quote p {
+  position: relative;
+
+  max-width: 45rem;
+
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2.15rem);
+  font-weight: 400;
+  line-height: 1.42;
+
+  letter-spacing: -0.015em;
+
+  text-wrap: pretty;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Author                                                                     */
+/* -------------------------------------------------------------------------- */
+
+.author {
+  margin-top: 1.8rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.authorName {
+  color: var(--testimonial-text);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  letter-spacing: 0.05em;
+}
+
+.authorDetails {
+  position: relative;
+
+  padding-left: 1.2rem;
+
+  color: var(--testimonial-muted);
+
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.authorDetails::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 50%;
+
+  width: 0.45rem;
+  height: 1px;
+
+  background: var(--testimonial-border);
+
+  transform: translateY(-50%);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Tripadvisor                                                                */
+/* -------------------------------------------------------------------------- */
+
+.tripadvisor {
+  margin-top: clamp(3.5rem, 7vw, 5.5rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+
+  padding-top: 2rem;
+
+  border-top: 1px solid var(--testimonial-border);
+}
+
+.tripadvisorLabel {
+  margin: 0 0 0.4rem;
+
+  color: var(--testimonial-accent);
+
+  font-size: 0.64rem;
+  font-weight: 600;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tripadvisorText {
+  max-width: 34rem;
+
+  margin: 0;
+
+  color: var(--testimonial-muted);
+
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.tripadvisorLink {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  padding: 0.9rem 1.15rem;
+
+  color: var(--testimonial-text);
+
+  border: 1px solid rgba(58, 48, 39, 0.22);
+  border-radius: 0.2rem;
+
+  background: transparent;
+
+  font-size: 0.76rem;
+  font-weight: 600;
+
+  letter-spacing: 0.04em;
+
+  text-decoration: none;
+
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.tripadvisorLink svg {
+  width: 1rem;
+  height: 1rem;
+
+  fill: none;
+  stroke: currentColor;
+
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  transition: transform 180ms ease;
+}
+
+.tripadvisorLink:hover {
+  color: var(--testimonial-accent);
+
+  border-color: var(--testimonial-accent);
+
+  transform: translateY(-1px);
+}
+
+.tripadvisorLink:hover svg {
+  transform: translateX(3px);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Focus                                                                      */
+/* -------------------------------------------------------------------------- */
+
+.tripadvisorLink:focus-visible {
+  outline: 2px solid var(--testimonial-accent);
+  outline-offset: 4px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Tablet                                                                     */
+/* -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 760px) {
+  .entryInner {
+    width: min(100%, 42rem);
+  }
+
+  .entryReversed .entryInner {
+    margin-left: 0;
+  }
+
+  .tripadvisor {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 1.5rem;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile                                                                     */
+/* -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 540px) {
+  .testimonials {
+    padding: 4.5rem 0;
+  }
+
+  .container {
+    width: 90%;
+  }
+
+  .intro {
+    margin-bottom: 3.5rem;
+  }
+
+  .title {
+    font-size: clamp(2.25rem, 11vw, 3rem);
+  }
+
+  .introText {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .entry {
+    padding: 3rem 0;
+  }
+
+  .entryNumber {
+    margin-bottom: 1.2rem;
+  }
+
+  .quote::before {
+    top: -1rem;
+
+    font-size: 4rem;
+  }
+
+  .quote p {
+    font-size: clamp(1.4rem, 7vw, 1.8rem);
+    line-height: 1.4;
+  }
+
+  .author {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 0.35rem;
+
+    margin-top: 1.5rem;
+  }
+
+  .authorDetails {
+    padding-left: 0;
+  }
+
+  .authorDetails::before {
+    display: none;
+  }
+
+  .tripadvisor {
+    margin-top: 3.5rem;
+  }
+
+  .tripadvisorLink {
+    justify-content: space-between;
+
+    width: 100%;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reduced motion                                                             */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .tripadvisorLink,
+  .tripadvisorLink svg {
+    transition: none;
+  }
+
+  .tripadvisorLink:hover,
+  .tripadvisorLink:hover svg {
+    transform: none;
+  }
+}

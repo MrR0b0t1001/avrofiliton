@@ -4,6 +4,7 @@ import Footer from "../components/Footer/Footer";
 import Hero from "../components/Hero/Hero";
 import Menu from "../components/Menu/Menu";
 import Navbar from "../components/Navbar/Navbar";
+import Testimonials from "../components/Testimonials/Testimonials";
 import Visit from "../components/Visit/Visit";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
       <Menu />
       <FoodStories />
       <Visit />
+      <Testimonials />
       <Footer />
     </>
   );

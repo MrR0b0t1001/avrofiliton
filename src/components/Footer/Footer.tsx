@@ -8,8 +8,8 @@ const FACEBOOK_URL = "https://www.facebook.com/avrofiliton/";
 /*
  * Replace with the real restaurant number.
  */
-const PHONE_DISPLAY = "+30 28210 XXXXX";
-const PHONE_HREF = "tel:+3028210XXXXX";
+const PHONE_DISPLAY = "+30 697 723 104";
+const PHONE_HREF = "tel:+30697723104";
 
 const footerLinks = [
   { href: "#home", label: "Home" },
