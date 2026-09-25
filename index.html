@@ -2,12 +2,86 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Avrofiliton Restaurant | Platanias, Chania</title>
+
+    <title>Avrofiliton | Traditional Cretan Restaurant in Platanias</title>
+
     <meta
       name="description"
-      content="Avrofiliton is a family-owned restaurant in the heart of Platanias, Chania, serving Cretan dishes, mezedes and Greek favourites since 1910."
+      content="Visit Avrofiliton in Platanias, Chania: a family restaurant with roots as a village kafeneion since 1910. Discover our story, Cretan dishes and menu."
     />
+
+    <link rel="canonical" href="https://mrr0b0t1001.github.io/avrofiliton/" />
+
+    <meta name="theme-color" content="#f7f2e9" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Add these icon files to public/. -->
+    <link rel="icon" href="%BASE_URL%favicon.ico" sizes="16x16 32x32 48x48" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="%BASE_URL%apple-touch-icon.png"
+    />
+
+    <!-- Social sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Avrofiliton" />
+
+    <meta
+      property="og:title"
+      content="Avrofiliton — A family table in Platanias"
+    />
+
+    <meta
+      property="og:description"
+      content="From the village kafeneion to our family restaurant. Discover Avrofiliton, its history and the Cretan food served at our tables."
+    />
+
+    <meta
+      property="og:url"
+      content="https://mrr0b0t1001.github.io/avrofiliton/"
+    />
+
+    <!-- Export this image at 1200 × 630 and add it to public/images/. -->
+    <meta
+      property="og:image"
+      content="https://mrr0b0t1001.github.io/avrofiliton/images/avrofiliton-social.jpg"
+    />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta
+      property="og:image:alt"
+      content="Avrofiliton restaurant in Platanias, Chania, Crete"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta
+      name="twitter:title"
+      content="Avrofiliton — A family table in Platanias"
+    />
+
+    <meta
+      name="twitter:description"
+      content="A family restaurant with roots in the village kafeneion of 1910. Explore our story, Cretan dishes and menu."
+    />
+
+    <meta
+      name="twitter:image"
+      content="https://mrr0b0t1001.github.io/avrofiliton/images/avrofiliton-social.jpg"
+    />
+
+    <meta
+      name="twitter:image:alt"
+      content="Avrofiliton restaurant in Platanias, Chania, Crete"
+    />
+
+    <!-- Prioritise the photograph used in Hero.tsx. -->
     <link
       rel="preload"
       as="image"
@@ -15,27 +89,64 @@
       type="image/avif"
       fetchpriority="high"
     />
+
+    <!-- Restaurant information supplied for this project. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "@id": "https://mrr0b0t1001.github.io/avrofiliton/#restaurant",
+        "name": "Avrofiliton",
+        "url": "https://mrr0b0t1001.github.io/avrofiliton/",
+        "description": "A family restaurant in Platanias, Chania, with roots as a traditional village kafeneion since 1910.",
+        "image": "https://mrr0b0t1001.github.io/avrofiliton/images/avrofiliton-hero.avif",
+        "servesCuisine": ["Cretan", "Greek"],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Platanias",
+          "addressRegion": "Chania, Crete",
+          "addressCountry": "GR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 35.5172523,
+          "longitude": 23.9098423
+        },
+        "hasMenu": "https://mrr0b0t1001.github.io/avrofiliton/#menu",
+        "sameAs": [
+          "https://www.facebook.com/avrofiliton/",
+          "https://www.tripadvisor.com/Restaurant_Review-g635605-d3431070-Reviews-Avrofiliton-Platanias_Chania_Prefecture_Crete.html"
+        ]
+      }
+    </script>
+
     <style>
       :root {
+        color-scheme: light;
+
         --nav-height: 5.25rem;
+
         --font-body:
           system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
           sans-serif;
         --font-display: Georgia, "Times New Roman", serif;
-        --font-brand: "Segoe Script", cursive;
+        --font-brand: "Allura", "Segoe Script", cursive;
+
         --color-background: #f7f2e9;
-        --color-surface: #fffdf8;
-        --color-text: #2d2924;
-        --color-text-muted: #756d64;
-        --color-accent: #995e3d;
-        --color-accent-dark: #7d492f;
-        --color-border: rgba(58, 48, 39, 0.12);
+        --color-surface: #faf6ec;
+        --color-text: #382f27;
+        --color-text-muted: #706255;
+        --color-accent: #855339;
+        --color-accent-dark: #69402c;
+        --color-border: #cbbca7;
       }
+
       *,
       *::before,
       *::after {
         box-sizing: border-box;
       }
+
       html,
       body,
       #root {
@@ -44,24 +155,33 @@
         margin: 0;
         padding: 0;
       }
+
       html {
         scroll-behavior: smooth;
-        scroll-padding-top: var(--nav-height);
+        scroll-padding-top: calc(var(--nav-height) + 1rem);
       }
+
       body {
         min-width: 320px;
         min-height: 100vh;
-        font-family: var(--font-body);
+        min-height: 100svh;
+
         color: var(--color-text);
         background: var(--color-background);
+
+        font-family: var(--font-body);
+        line-height: 1.6;
+
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        overflow-x: hidden;
       }
+
       #root {
         min-height: 100vh;
+        min-height: 100svh;
       }
+
       img,
       picture,
       video,
@@ -70,32 +190,42 @@
         display: block;
         max-width: 100%;
       }
+
       button,
       input,
       textarea,
       select {
         font: inherit;
       }
-      button,
-      a {
-        -webkit-tap-highlight-color: transparent;
-      }
+
       a {
         color: inherit;
       }
+
+      :focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 4px;
+      }
+
       ::selection {
         color: #fffdf8;
         background: var(--color-accent);
       }
+
+      .no-script {
+        max-width: 40rem;
+        margin: 2rem auto;
+        padding: 1.5rem;
+      }
+
       @media screen and (max-width: 640px) {
         :root {
           --nav-height: 4.75rem;
         }
       }
+
       @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
+        html,
         *,
         *::before,
         *::after {
@@ -104,8 +234,26 @@
       }
     </style>
   </head>
+
   <body>
+    <noscript>
+      <div class="no-script">
+        <h1>Avrofiliton Restaurant</h1>
+        <p>
+          A family restaurant in Platanias, Chania, Crete, with roots as a
+          village kafeneion since 1910.
+        </p>
+        <p>
+          Please enable JavaScript to explore our menu and story. You can also
+          <a href="https://www.facebook.com/avrofiliton/">
+            contact Avrofiliton on Facebook</a
+          >.
+        </p>
+      </div>
+    </noscript>
+
     <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
