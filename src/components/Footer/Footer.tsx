@@ -5,16 +5,16 @@ const GOOGLE_MAPS_URL =
 
 const FACEBOOK_URL = "https://www.facebook.com/avrofiliton/";
 
-/*
- * Replace with the real restaurant number.
- */
-const PHONE_DISPLAY = "+30 697 723 104";
-const PHONE_HREF = "tel:+30697723104";
+// Confirm the complete reservation number before publishing.
+const PHONE_DISPLAY = "+30 697 723 1045";
+const PHONE_HREF = "tel:+306977231045";
 
 const footerLinks = [
   { href: "#home", label: "Home" },
   { href: "#about", label: "Our Story" },
   { href: "#menu", label: "Menu" },
+  { href: "#food-stories", label: "Food Stories" },
+  { href: "#testimonials", label: "Testimonials" },
   { href: "#visit", label: "Visit & Reserve" },
 ];
 
@@ -24,49 +24,76 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        <div className={styles.main}>
-          <div className={styles.brandColumn}>
-            <a
-              href="#home"
-              className={styles.brand}
-              aria-label="Avrofiliton home"
-            >
-              <span className={styles.brandName}>Avrofiliton</span>
-              <span className={styles.brandSince}>Since 1910</span>
-            </a>
+        <div className={styles.identity}>
+          <a
+            href="#home"
+            className={styles.brand}
+            aria-label="Avrofiliton home"
+          >
+            <span className={styles.brandName}>Avrofiliton</span>
+            <span className={styles.brandSince}>Since 1910</span>
+          </a>
 
-            <p className={styles.brandText}>
-              A family table in the heart of Platanias for more than a century.
-            </p>
+          <p className={styles.brandText}>
+            From the village kafeneion to the family table.
+          </p>
+
+          <div className={styles.ornament} aria-hidden="true">
+            <span />
+          </div>
+        </div>
+
+        <div className={styles.details}>
+          <div className={styles.detailGroup}>
+            <h2 className={styles.detailHeading}>Find us</h2>
+
+            <address className={styles.address}>
+              Platanias, Chania
+              <br />
+              Crete, Greece
+            </address>
+
+            <a
+              href={GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.textLink}
+            >
+              Google Maps
+              <span aria-hidden="true">↗</span>
+              <span className={styles.srOnly}> (opens in a new tab)</span>
+            </a>
           </div>
 
-          <div className={styles.visitColumn}>
-            <p className={styles.columnLabel}>Visit</p>
+          <div className={styles.detailGroup}>
+            <h2 className={styles.detailHeading}>Reserve a table</h2>
 
-            <div className={styles.address}>
-              <span>Platanias, Chania</span>
-              <span>Crete · Greece</span>
-            </div>
+            <p className={styles.detailText}>Give us a call.</p>
 
             <a
               href={PHONE_HREF}
               className={styles.phone}
-              aria-label={`Call Avrofiliton at ${PHONE_DISPLAY}`}
+              aria-label={`Call Avrofiliton for reservations at ${PHONE_DISPLAY}`}
             >
               {PHONE_DISPLAY}
             </a>
+          </div>
 
-            <div className={styles.externalLinks}>
-              <a href={GOOGLE_MAPS_URL} target="_blank" rel="noreferrer">
-                Google Maps
-                <span aria-hidden="true">↗</span>
-              </a>
+          <div className={styles.detailGroup}>
+            <h2 className={styles.detailHeading}>Keep in touch</h2>
 
-              <a href={FACEBOOK_URL} target="_blank" rel="noreferrer">
-                Facebook
-                <span aria-hidden="true">↗</span>
-              </a>
-            </div>
+            <p className={styles.detailText}>Follow Avrofiliton on Facebook.</p>
+
+            <a
+              href={FACEBOOK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.textLink}
+            >
+              Facebook
+              <span aria-hidden="true">↗</span>
+              <span className={styles.srOnly}> (opens in a new tab)</span>
+            </a>
           </div>
         </div>
 
@@ -80,8 +107,7 @@ const Footer = () => {
 
         <div className={styles.bottom}>
           <p>© {currentYear} Avrofiliton</p>
-
-          <p>Platanias · Crete · Since 1910</p>
+          <p>Platanias · Chania · Crete</p>
         </div>
       </div>
     </footer>

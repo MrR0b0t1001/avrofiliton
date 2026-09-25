@@ -11,109 +11,90 @@ const FACEBOOK_URL = "https://www.facebook.com/avrofiliton/";
 const LATITUDE = 35.5172523;
 const LONGITUDE = 23.9098423;
 
-/*
- * Replace this with the restaurant's real reservation number.
- *
- * Example:
- * display: +30 28210 12345
- * href: tel:+302821012345
- */
-const PHONE_DISPLAY = "+30 697 723 104";
-const PHONE_HREF = "tel:+30697723104";
+// Confirm the complete reservation number before publishing.
+const PHONE_DISPLAY = "+30 697 723 1045";
+const PHONE_HREF = "tel:+306977231045";
+
+const MAP_EMBED_URL =
+  `https://www.google.com/maps?q=${LATITUDE},${LONGITUDE}` +
+  "&z=18&output=embed";
+
+const STREET_VIEW_EMBED_URL =
+  "https://www.google.com/maps?layer=c" +
+  `&cbll=${LATITUDE},${LONGITUDE}` +
+  "&cbp=11,0,0,0,0&output=svembed";
 
 const Visit = () => {
   const [viewMode, setViewMode] = useState<ViewMode>("map");
-
-  const mapEmbedUrl =
-    `https://www.google.com/maps?q=${LATITUDE},${LONGITUDE}` +
-    "&z=18&output=embed";
-
-  const streetViewEmbedUrl =
-    `https://www.google.com/maps?layer=c` +
-    `&cbll=${LATITUDE},${LONGITUDE}` +
-    "&cbp=11,0,0,0,0&output=svembed";
 
   return (
     <section id="visit" className={styles.visit} aria-labelledby="visit-title">
       <div className={styles.container}>
         <div className={styles.layout}>
-          <div className={styles.visual}>
-            <img
-              className={styles.sunsetImage}
-              src={`${import.meta.env.BASE_URL}images/sunset.avif`}
-              alt="Sunset seen from Avrofiliton in Platanias"
-              loading="lazy"
-              decoding="async"
-            />
-
-            <div className={styles.imageOverlay} aria-hidden="true" />
-
-            <div className={styles.imageCaption}>
-              <span className={styles.imageCaptionLabel}>
-                Platanias · Chania
-              </span>
-
-              <p>
-                An evening at the table,
-                <br />
-                with the sun setting over Crete.
-              </p>
+          <figure className={styles.visual}>
+            <div className={styles.photoFrame}>
+              <img
+                className={styles.sunsetImage}
+                src={`${import.meta.env.BASE_URL}images/sunset.avif`}
+                alt="The back of Avrofiliton restaurant at sunset in Platanias"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-          </div>
+
+            <figcaption className={styles.imageCaption}>
+              An evening at Avrofiliton, Platanias.
+            </figcaption>
+          </figure>
 
           <div className={styles.content}>
             <header className={styles.intro}>
-              <p className={styles.eyebrow}>Visit &amp; Reserve</p>
+              <p className={styles.eyebrow}>Visit &amp; reserve</p>
 
               <h2 id="visit-title" className={styles.title}>
-                Come find us in
-                <br />
-                Platanias.
+                Join us in Platanias.
               </h2>
 
               <p className={styles.introText}>
-                Join us in the heart of Platanias for Cretan food, a relaxed
-                table and an evening by the village.
+                You’ll find Avrofiliton in the heart of the village. Come for a
+                meal, settle in and enjoy an evening at our table.
               </p>
             </header>
 
-            <div className={styles.reservation}>
-              <div className={styles.reservationCopy}>
-                <p className={styles.reservationLabel}>Reservations</p>
+            <section
+              className={styles.reservation}
+              aria-labelledby="visit-reservations-title"
+            >
+              <h3 id="visit-reservations-title" className={styles.detailTitle}>
+                A table for you
+              </h3>
 
-                <p className={styles.reservationText}>
-                  Give us a call to reserve your table.
-                </p>
-              </div>
+              <p className={styles.reservationText}>
+                Give us a call to reserve your table.
+              </p>
 
               <a
                 href={PHONE_HREF}
                 className={styles.phone}
                 aria-label={`Call Avrofiliton for reservations at ${PHONE_DISPLAY}`}
               >
-                <span className={styles.phoneIcon}>
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M7.1 3.5 9.3 8c.3.7.1 1.5-.5 2l-1.1.9a14.7 14.7 0 0 0 5.4 5.4l.9-1.1c.5-.6 1.3-.8 2-.5l4.5 2.2c.7.3 1.1 1 .9 1.8l-.5 2c-.2.8-.9 1.3-1.7 1.3C9.7 22 2 14.3 2 4.8c0-.8.5-1.5 1.3-1.7l2-.5c.8-.2 1.5.2 1.8.9Z" />
-                  </svg>
-                </span>
-
-                <span>
-                  <small>Call to reserve</small>
-                  {PHONE_DISPLAY}
-                </span>
+                {PHONE_DISPLAY}
               </a>
-            </div>
+            </section>
 
-            <div className={styles.location}>
-              <div className={styles.locationHeader}>
+            <section
+              className={styles.location}
+              aria-labelledby="visit-location-title"
+            >
+              <header className={styles.locationHeader}>
                 <div>
-                  <p className={styles.locationLabel}>Find us</p>
+                  <h3 id="visit-location-title" className={styles.detailTitle}>
+                    Find Avrofiliton
+                  </h3>
 
-                  <p className={styles.locationName}>Avrofiliton</p>
-
-                  <p className={styles.locationAddress}>
+                  <address className={styles.address}>
                     Platanias, Chania · Crete
-                  </p>
+                  </address>
                 </div>
 
                 <div
@@ -130,6 +111,7 @@ const Visit = () => {
                       .filter(Boolean)
                       .join(" ")}
                     aria-pressed={viewMode === "map"}
+                    aria-controls="visit-location-frame"
                     onClick={() => setViewMode("map")}
                   >
                     Map
@@ -144,18 +126,21 @@ const Visit = () => {
                       .filter(Boolean)
                       .join(" ")}
                     aria-pressed={viewMode === "street"}
+                    aria-controls="visit-location-frame"
                     onClick={() => setViewMode("street")}
                   >
                     Street View
                   </button>
                 </div>
-              </div>
+              </header>
 
-              <div className={styles.mapFrame}>
+              <div id="visit-location-frame" className={styles.mapFrame}>
                 <iframe
                   key={viewMode}
                   className={styles.map}
-                  src={viewMode === "map" ? mapEmbedUrl : streetViewEmbedUrl}
+                  src={
+                    viewMode === "map" ? MAP_EMBED_URL : STREET_VIEW_EMBED_URL
+                  }
                   title={
                     viewMode === "map"
                       ? "Map showing Avrofiliton in Platanias"
@@ -171,26 +156,26 @@ const Visit = () => {
                 <a
                   href={GOOGLE_MAPS_URL}
                   target="_blank"
-                  rel="noreferrer"
-                  className={styles.primaryLink}
+                  rel="noopener noreferrer"
+                  className={styles.textLink}
                 >
-                  <span>Open in Google Maps</span>
-
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
+                  Open in Google Maps
+                  <span aria-hidden="true">↗</span>
+                  <span className={styles.srOnly}> (opens in a new tab)</span>
                 </a>
 
                 <a
                   href={FACEBOOK_URL}
                   target="_blank"
-                  rel="noreferrer"
-                  className={styles.secondaryLink}
+                  rel="noopener noreferrer"
+                  className={styles.textLink}
                 >
                   Facebook
+                  <span aria-hidden="true">↗</span>
+                  <span className={styles.srOnly}> (opens in a new tab)</span>
                 </a>
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </div>

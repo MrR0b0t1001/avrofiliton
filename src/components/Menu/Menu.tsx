@@ -1,27 +1,22 @@
-import { useEffect, useRef, useState, type MouseEvent } from "react";
-
 import styles from "./Menu.module.css";
 
 type MenuItem = {
   name: string;
   description: string;
+  price?: string;
 };
 
-type MenuPage = {
+type MenuCategory = {
   id: string;
-  number: string;
-  label: string;
   title: string;
-  subtitle?: string;
+  subtitle: string;
   items: MenuItem[];
 };
 
-const menuPages: MenuPage[] = [
+const menuCategories: MenuCategory[] = [
   {
     id: "starters",
-    number: "01",
-    label: "Starters",
-    title: "To Begin",
+    title: "Starters",
     subtitle: "For the middle of the table.",
     items: [
       {
@@ -48,9 +43,7 @@ const menuPages: MenuPage[] = [
   },
   {
     id: "salads",
-    number: "02",
-    label: "Salads",
-    title: "From the Garden",
+    title: "Salads",
     subtitle: "Simple ingredients, served fresh.",
     items: [
       {
@@ -73,9 +66,7 @@ const menuPages: MenuPage[] = [
   },
   {
     id: "cretan",
-    number: "03",
-    label: "Cretan Kitchen",
-    title: "From Crete",
+    title: "Cretan Kitchen",
     subtitle: "Recipes shaped by the island.",
     items: [
       {
@@ -102,9 +93,7 @@ const menuPages: MenuPage[] = [
   },
   {
     id: "grill",
-    number: "04",
-    label: "Grill",
-    title: "From the Fire",
+    title: "From the Grill",
     subtitle: "Grilled simply and served generously.",
     items: [
       {
@@ -127,9 +116,7 @@ const menuPages: MenuPage[] = [
   },
   {
     id: "sea",
-    number: "05",
-    label: "Sea",
-    title: "From the Sea",
+    title: "Fish & Seafood",
     subtitle: "Mediterranean flavours from the coast.",
     items: [
       {
@@ -152,9 +139,7 @@ const menuPages: MenuPage[] = [
   },
   {
     id: "desserts",
-    number: "06",
-    label: "Sweet",
-    title: "Something Sweet",
+    title: "Desserts",
     subtitle: "A simple finish to the table.",
     items: [
       {
@@ -178,293 +163,90 @@ const menuPages: MenuPage[] = [
 ];
 
 const Menu = () => {
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const pageRefs = useRef<(HTMLElement | null)[]>([]);
-
-  /*
-   * The page currently presented as active in the UI.
-   */
-  const [activePage, setActivePage] = useState(0);
-
-  /*
-   * Prevent intermediate positions during a smooth programmatic scroll
-   * from changing activePage.
-   */
-  const isProgrammaticScroll = useRef(false);
-  const targetPageRef = useRef<number | null>(null);
-  const scrollEndTimerRef = useRef<number | null>(null);
-
-  const getClosestPage = () => {
-    const carousel = carouselRef.current;
-
-    if (!carousel) return 0;
-
-    const carouselLeft = carousel.getBoundingClientRect().left;
-
-    let closestIndex = 0;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    pageRefs.current.forEach((page, index) => {
-      if (!page) return;
-
-      const distance = Math.abs(
-        page.getBoundingClientRect().left - carouselLeft,
-      );
-
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-
-    return closestIndex;
-  };
-
-  const finishProgrammaticScroll = () => {
-    if (targetPageRef.current !== null) {
-      setActivePage(targetPageRef.current);
-    } else {
-      setActivePage(getClosestPage());
-    }
-
-    targetPageRef.current = null;
-    isProgrammaticScroll.current = false;
-  };
-
-  const goToPage = (index: number) => {
-    const carousel = carouselRef.current;
-    const page = pageRefs.current[index];
-
-    if (!carousel || !page) return;
-
-    /*
-     * Update the controls/category immediately so the interface responds
-     * to the user's click, but lock scroll-derived state while travelling
-     * through intermediate pages.
-     */
-    targetPageRef.current = index;
-    isProgrammaticScroll.current = true;
-
-    setActivePage(index);
-
-    carousel.scrollTo({
-      left: page.offsetLeft - carousel.offsetLeft,
-      behavior: "smooth",
-    });
-  };
-
-  const goPrevious = () => {
-    goToPage(Math.max(0, activePage - 1));
-  };
-
-  const goNext = () => {
-    goToPage(Math.min(menuPages.length - 1, activePage + 1));
-  };
-
-  const handleCategoryClick = (
-    event: MouseEvent<HTMLButtonElement>,
-    index: number,
-  ) => {
-    event.preventDefault();
-    goToPage(index);
-  };
-
-  useEffect(() => {
-    const carousel = carouselRef.current;
-
-    if (!carousel) return;
-
-    let frameId: number | null = null;
-
-    const updateFromManualScroll = () => {
-      /*
-       * A smooth programmatic scroll can pass several other pages.
-       * Ignore those intermediate positions completely.
-       */
-      if (isProgrammaticScroll.current) {
-        frameId = null;
-        return;
-      }
-
-      const closestIndex = getClosestPage();
-
-      setActivePage((previous) =>
-        previous === closestIndex ? previous : closestIndex,
-      );
-
-      frameId = null;
-    };
-
-    const handleScroll = () => {
-      /*
-       * scrollend is not something we need to depend on here.
-       * The timeout acts as a small "scroll has settled" detector.
-       */
-      if (scrollEndTimerRef.current !== null) {
-        window.clearTimeout(scrollEndTimerRef.current);
-      }
-
-      scrollEndTimerRef.current = window.setTimeout(() => {
-        if (isProgrammaticScroll.current) {
-          finishProgrammaticScroll();
-          return;
-        }
-
-        const closestIndex = getClosestPage();
-
-        setActivePage((previous) =>
-          previous === closestIndex ? previous : closestIndex,
-        );
-      }, 120);
-
-      if (isProgrammaticScroll.current) return;
-
-      if (frameId !== null) return;
-
-      frameId = window.requestAnimationFrame(updateFromManualScroll);
-    };
-
-    carousel.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
-
-    return () => {
-      carousel.removeEventListener("scroll", handleScroll);
-
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId);
-      }
-
-      if (scrollEndTimerRef.current !== null) {
-        window.clearTimeout(scrollEndTimerRef.current);
-      }
-    };
-  }, []);
-
   return (
     <section id="menu" className={styles.menu} aria-labelledby="menu-title">
-      <div className={styles.container}>
-        <header className={styles.intro}>
-          <div>
-            <p className={styles.eyebrow}>The Menu</p>
+      <div className={styles.paper}>
+        <header className={styles.header}>
+          <p className={styles.location}>Platanias · Chania · Crete</p>
 
-            <h2 id="menu-title" className={styles.title}>
-              From our table.
-            </h2>
+          <p className={styles.restaurant}>Avrofiliton</p>
+
+          <p className={styles.since}>Since 1910</p>
+
+          <div className={styles.ornament} aria-hidden="true">
+            <span />
           </div>
 
-          <p className={styles.introText}>
+          <h2 id="menu-title" className={styles.title}>
+            Our Menu
+          </h2>
+
+          <p className={styles.intro}>
             Familiar Cretan flavours, local ingredients and food made to be
             shared around the table.
           </p>
         </header>
 
-        <nav className={styles.categories} aria-label="Menu categories">
-          {menuPages.map((page, index) => (
-            <button
-              key={page.id}
-              type="button"
-              className={[
-                styles.category,
-                activePage === index ? styles.categoryActive : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              aria-pressed={activePage === index}
-              onClick={(event) => handleCategoryClick(event, index)}
+        <nav className={styles.index} aria-label="Menu categories">
+          {menuCategories.map((category) => (
+            <a
+              key={category.id}
+              href={`#menu-${category.id}`}
+              className={styles.indexLink}
             >
-              {page.label}
-            </button>
+              {category.title}
+            </a>
           ))}
         </nav>
 
-        <div className={styles.menuStage}>
-          <div
-            ref={carouselRef}
-            className={styles.pages}
-            aria-label="Restaurant menu"
-          >
-            {menuPages.map((page, index) => (
-              <article
-                key={page.id}
-                ref={(element) => {
-                  pageRefs.current[index] = element;
-                }}
-                className={styles.page}
-              >
-                <div className={styles.pageHeader}>
-                  <span className={styles.pageNumber}>{page.number}</span>
+        <div className={styles.categories}>
+          {menuCategories.map((category) => (
+            <section
+              key={category.id}
+              id={`menu-${category.id}`}
+              className={styles.category}
+              aria-labelledby={`menu-${category.id}-title`}
+            >
+              <header className={styles.categoryHeader}>
+                <h3
+                  id={`menu-${category.id}-title`}
+                  className={styles.categoryTitle}
+                >
+                  {category.title}
+                </h3>
 
-                  <div>
-                    <p className={styles.pageLabel}>Avrofiliton · Platanias</p>
+                <p className={styles.categorySubtitle}>{category.subtitle}</p>
+              </header>
 
-                    <h3 className={styles.pageTitle}>{page.title}</h3>
-
-                    {page.subtitle && (
-                      <p className={styles.pageSubtitle}>{page.subtitle}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.dishes}>
-                  {page.items.map((item) => (
-                    <div key={item.name} className={styles.dish}>
+              <ul className={styles.dishes}>
+                {category.items.map((item) => (
+                  <li key={item.name} className={styles.dish}>
+                    <div className={styles.dishHeading}>
                       <h4 className={styles.dishName}>{item.name}</h4>
 
-                      <p className={styles.dishDescription}>
-                        {item.description}
-                      </p>
+                      {item.price && (
+                        <>
+                          <span
+                            className={styles.dishLeader}
+                            aria-hidden="true"
+                          />
+
+                          <span className={styles.dishPrice}>{item.price}</span>
+                        </>
+                      )}
                     </div>
-                  ))}
-                </div>
 
-                <div className={styles.pageFooter}>
-                  <span>Since 1910</span>
-                  <span>{page.number}</span>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className={styles.controls}>
-            <button
-              type="button"
-              className={styles.arrow}
-              aria-label="Previous menu page"
-              disabled={activePage === 0}
-              onClick={goPrevious}
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M15 5L8 12L15 19" />
-              </svg>
-            </button>
-
-            <p className={styles.counter}>
-              <span>{String(activePage + 1).padStart(2, "0")}</span>
-
-              <span className={styles.counterLine} />
-
-              <span>{String(menuPages.length).padStart(2, "0")}</span>
-            </p>
-
-            <button
-              type="button"
-              className={styles.arrow}
-              aria-label="Next menu page"
-              disabled={activePage === menuPages.length - 1}
-              onClick={goNext}
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M9 5L16 12L9 19" />
-              </svg>
-            </button>
-          </div>
+                    <p className={styles.dishDescription}>{item.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
 
-        <p className={styles.note}>
-          Sample menu shown for layout preview. Final dishes will be replaced
-          with the restaurant&apos;s current menu.
-        </p>
+        <footer className={styles.footer}>
+          <p>Avrofiliton · Platanias, Chania</p>
+        </footer>
       </div>
     </section>
   );

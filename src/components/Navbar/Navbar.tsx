@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import styles from "./Navbar.module.css";
 
 type NavItem = {
@@ -11,6 +11,8 @@ const navItems: NavItem[] = [
   { href: "#home", label: "Home" },
   { href: "#about", label: "Our Story" },
   { href: "#menu", label: "Menu" },
+  { href: "#food-stories", label: "Food Stories" },
+  { href: "#testimonials", label: "Testimonials" },
   { href: "#visit", label: "Visit & Reserve", isCta: true },
 ];
 
@@ -20,60 +22,76 @@ const Navbar = () => {
   const [activeId, setActiveId] = useState("home");
 
   const headerRef = useRef<HTMLElement>(null);
-  const mobileToggleRef = useRef<HTMLButtonElement>(null);
-  const mobileCloseRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   /*
-   * Header state + active section tracking.
-   *
-   * requestAnimationFrame prevents the scroll handler from causing
-   * unnecessary work during rapid scrolling.
+   * Track the section currently reached.
+   * Actual page positions determine the active link,
+   * regardless of the order of navItems.
    */
   useEffect(() => {
     let frameId: number | null = null;
 
-    const updateNavigationState = () => {
-      const scrollPosition = window.scrollY;
-      const headerHeight = headerRef.current?.offsetHeight ?? 80;
+    const updateNavigation = () => {
+      frameId = null;
 
-      setScrolled(scrollPosition > 24);
+      const headerHeight = headerRef.current?.offsetHeight ?? 84;
+      const threshold = headerHeight + 80;
 
-      let currentSection = "home";
+      const sections = navItems
+        .map((item) => {
+          const id = item.href.slice(1);
+          const element = document.getElementById(id);
 
-      for (const item of navItems) {
-        const sectionId = item.href.slice(1);
-        const section = document.getElementById(sectionId);
+          return element
+            ? { id, top: element.getBoundingClientRect().top }
+            : null;
+        })
+        .filter(
+          (section): section is { id: string; top: number } => section !== null,
+        )
+        .sort((a, b) => a.top - b.top);
 
-        if (!section) continue;
+      let currentId = sections[0]?.id ?? "home";
 
-        const sectionTop = section.getBoundingClientRect().top + scrollPosition;
-
-        if (scrollPosition + headerHeight + 80 >= sectionTop) {
-          currentSection = sectionId;
+      for (const section of sections) {
+        if (section.top <= threshold) {
+          currentId = section.id;
         }
       }
 
-      setActiveId((previous) =>
-        previous === currentSection ? previous : currentSection,
-      );
+      const atBottom =
+        window.scrollY > 0 &&
+        window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 4;
 
-      frameId = null;
+      if (atBottom && sections.length > 0) {
+        currentId = sections[sections.length - 1].id;
+      }
+
+      setScrolled(window.scrollY > 24);
+      setActiveId(currentId);
     };
 
-    const handleScroll = () => {
-      if (frameId !== null) return;
-
-      frameId = window.requestAnimationFrame(updateNavigationState);
+    const scheduleUpdate = () => {
+      if (frameId === null) {
+        frameId = window.requestAnimationFrame(updateNavigation);
+      }
     };
 
-    updateNavigationState();
+    updateNavigation();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
+    window.addEventListener("scroll", scheduleUpdate, {
+      passive: true,
+    });
+    window.addEventListener("resize", scheduleUpdate);
+    window.addEventListener("load", scheduleUpdate);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      window.removeEventListener("load", scheduleUpdate);
 
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId);
@@ -82,86 +100,151 @@ const Navbar = () => {
   }, []);
 
   /*
-   * Mobile navigation behavior.
-   *
-   * - Prevent background scrolling.
-   * - Move focus into the drawer when opened.
-   * - Allow Escape to close it.
+   * A native modal dialog handles focus containment and Escape.
+   * Restore the body's previous scrolling style on close.
    */
   useEffect(() => {
-    if (!mobileOpen) {
-      document.body.style.overflow = "";
-      return;
+    if (!mobileOpen) return;
+
+    const dialog = dialogRef.current;
+
+    if (!dialog) return;
+
+    const previousOverflow = document.body.style.overflow;
+
+    if (!dialog.open) {
+      dialog.showModal();
     }
 
     document.body.style.overflow = "hidden";
-    mobileCloseRef.current?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-
-      setMobileOpen(false);
-      mobileToggleRef.current?.focus();
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
+    closeButtonRef.current?.focus();
 
     return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+
+      if (dialog.open) {
+        dialog.close();
+      }
     };
   }, [mobileOpen]);
 
+  /*
+   * Close the mobile menu when returning to the desktop layout.
+   * Keep this breakpoint aligned with the CSS.
+   */
+  useEffect(() => {
+    const desktopQuery = window.matchMedia("(min-width: 1201px)");
+
+    const handleBreakpointChange = () => {
+      if (desktopQuery.matches) {
+        dialogRef.current?.close();
+        setMobileOpen(false);
+      }
+    };
+
+    desktopQuery.addEventListener("change", handleBreakpointChange);
+
+    return () => {
+      desktopQuery.removeEventListener("change", handleBreakpointChange);
+    };
+  }, []);
+
   const closeMobileNavigation = () => {
+    dialogRef.current?.close();
     setMobileOpen(false);
   };
 
   const handleNavClick = (
-    event: React.MouseEvent<HTMLAnchorElement>,
+    event: MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
-    event.preventDefault();
+    // Preserve standard browser behaviour for modified clicks.
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
 
     const sectionId = href.slice(1);
     const section = document.getElementById(sectionId);
 
     if (!section) return;
 
-    const headerHeight = headerRef.current?.offsetHeight ?? 80;
+    event.preventDefault();
+    closeMobileNavigation();
 
-    const targetPosition =
-      section.getBoundingClientRect().top + window.scrollY - headerHeight;
+    window.requestAnimationFrame(() => {
+      const headerHeight = headerRef.current?.offsetHeight ?? 84;
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
-    window.scrollTo({
-      top: Math.max(0, targetPosition),
-      behavior: "smooth",
+      const targetPosition =
+        sectionId === "home"
+          ? 0
+          : section.getBoundingClientRect().top +
+            window.scrollY -
+            headerHeight -
+            16;
+
+      // Move keyboard focus to the destination without a second scroll.
+      const focusTarget =
+        section.querySelector<HTMLElement>("h1, h2") ?? section;
+
+      if (!focusTarget.hasAttribute("tabindex")) {
+        focusTarget.setAttribute("tabindex", "-1");
+        focusTarget.addEventListener(
+          "blur",
+          () => focusTarget.removeAttribute("tabindex"),
+          { once: true },
+        );
+      }
+
+      focusTarget.focus({ preventScroll: true });
+
+      window.scrollTo({
+        top: Math.max(0, targetPosition),
+        behavior: reduceMotion ? "instant" : "smooth",
+      });
+
+      window.history.replaceState(window.history.state, "", href);
+
+      setActiveId(sectionId);
     });
-
-    window.history.replaceState(null, "", href);
-
-    setActiveId(sectionId);
-    setMobileOpen(false);
   };
 
-  const getLinkClassName = (href: string, isCta = false) => {
-    const sectionId = href.slice(1);
-
-    return [
+  const getLinkClassName = (item: NavItem) =>
+    [
       styles.navLink,
-      activeId === sectionId ? styles.activeLink : "",
-      isCta ? styles.navCta : "",
+      activeId === item.href.slice(1) ? styles.activeLink : "",
+      item.isCta ? styles.navCta : "",
     ]
       .filter(Boolean)
       .join(" ");
+
+  const handleBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
+    if (event.target !== event.currentTarget) return;
+
+    const bounds = event.currentTarget.getBoundingClientRect();
+
+    if (
+      event.clientX < bounds.left ||
+      event.clientX > bounds.right ||
+      event.clientY < bounds.top ||
+      event.clientY > bounds.bottom
+    ) {
+      closeMobileNavigation();
+    }
   };
 
   return (
     <header
       ref={headerRef}
-      className={[
-        styles.header,
-        scrolled || mobileOpen ? styles.headerScrolled : "",
-      ]
+      className={[styles.header, scrolled ? styles.headerScrolled : ""]
         .filter(Boolean)
         .join(" ")}
     >
@@ -176,100 +259,15 @@ const Navbar = () => {
           <span className={styles.brandSince}>Since 1910</span>
         </a>
 
-        <nav className={styles.navigation} aria-label="Main navigation">
-          <div className={styles.desktopLinks}>
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className={getLinkClassName(item.href, item.isCta)}
-                aria-current={
-                  activeId === item.href.slice(1) ? "page" : undefined
-                }
-                onClick={(event) => handleNavClick(event, item.href)}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-
-          <button
-            ref={mobileToggleRef}
-            type="button"
-            className={styles.mobileToggle}
-            aria-label="Open navigation menu"
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMobileOpen(true)}
-          >
-            <span className={styles.menuLine} />
-            <span className={styles.menuLine} />
-            <span className={styles.menuLine} />
-          </button>
-        </nav>
-      </div>
-
-      <button
-        type="button"
-        className={[styles.overlay, mobileOpen ? styles.overlayOpen : ""]
-          .filter(Boolean)
-          .join(" ")}
-        aria-label="Close navigation menu"
-        tabIndex={mobileOpen ? 0 : -1}
-        onClick={closeMobileNavigation}
-      />
-
-      <aside
-        id="mobile-navigation"
-        className={[
-          styles.mobileDrawer,
-          mobileOpen ? styles.mobileDrawerOpen : "",
-        ]
-          .filter(Boolean)
-          .join(" ")}
-        aria-hidden={!mobileOpen}
-      >
-        <div className={styles.mobileTop}>
-          <div className={styles.mobileBrand}>
-            <span className={styles.mobileBrandName}>Avrofiliton</span>
-            <span className={styles.mobileBrandSince}>Since 1910</span>
-          </div>
-
-          <button
-            ref={mobileCloseRef}
-            type="button"
-            className={styles.mobileClose}
-            aria-label="Close navigation menu"
-            tabIndex={mobileOpen ? 0 : -1}
-            onClick={closeMobileNavigation}
-          >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M6 6L18 18M18 6L6 18"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <nav className={styles.mobileLinks} aria-label="Mobile navigation">
+        <nav className={styles.desktopNavigation} aria-label="Main navigation">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className={getLinkClassName(item.href, item.isCta)}
+              className={getLinkClassName(item)}
               aria-current={
-                activeId === item.href.slice(1) ? "page" : undefined
+                activeId === item.href.slice(1) ? "location" : undefined
               }
-              tabIndex={mobileOpen ? 0 : -1}
               onClick={(event) => handleNavClick(event, item.href)}
             >
               {item.label}
@@ -277,11 +275,71 @@ const Navbar = () => {
           ))}
         </nav>
 
-        <div className={styles.mobileFooter}>
-          <span>Platanias, Chania</span>
-          <span>Crete · Greece</span>
+        <button
+          type="button"
+          className={styles.mobileToggle}
+          aria-label="Open navigation"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
+          aria-haspopup="dialog"
+          onClick={() => setMobileOpen(true)}
+        >
+          <span>Explore</span>
+
+          <span className={styles.menuIcon} aria-hidden="true">
+            <span />
+            <span />
+          </span>
+        </button>
+      </div>
+
+      <dialog
+        ref={dialogRef}
+        id="mobile-navigation"
+        className={styles.mobileDrawer}
+        aria-labelledby="mobile-navigation-title"
+        onClose={() => setMobileOpen(false)}
+        onClick={handleBackdropClick}
+      >
+        <div className={styles.mobileTop}>
+          <div className={styles.mobileBrand}>
+            <span className={styles.brandName}>Avrofiliton</span>
+            <span className={styles.brandSince}>Since 1910</span>
+          </div>
+
+          <button
+            ref={closeButtonRef}
+            type="button"
+            className={styles.mobileClose}
+            onClick={closeMobileNavigation}
+          >
+            Close
+            <span aria-hidden="true">×</span>
+          </button>
         </div>
-      </aside>
+
+        <h2 id="mobile-navigation-title" className={styles.mobileHeading}>
+          Welcome to Avrofiliton
+        </h2>
+
+        <nav className={styles.mobileLinks} aria-label="Mobile navigation">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className={getLinkClassName(item)}
+              aria-current={
+                activeId === item.href.slice(1) ? "location" : undefined
+              }
+              onClick={(event) => handleNavClick(event, item.href)}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <p className={styles.mobileFooter}>Platanias · Chania · Crete</p>
+      </dialog>
     </header>
   );
 };

@@ -1,360 +1,302 @@
 .hero {
-  --hero-text: #fffdf8;
-  --hero-text-muted: rgba(255, 253, 248, 0.82);
+  --hero-paper: #f7f2e9;
+  --hero-photo-mount: #fffaf2;
+  --hero-ink: #382f27;
+  --hero-muted: #706255;
+  --hero-accent: #855339;
+  --hero-rule: #cbbca7;
+  --hero-serif: Georgia, "Times New Roman", serif;
 
-  --hero-accent: #995e3d;
-  --hero-accent-hover: #7d492f;
+  /*
+   * Leaves space for the existing fixed navbar.
+   */
+  padding-top: calc(var(--nav-height, 5.25rem) + clamp(2rem, 4vw, 3.5rem));
+  padding-bottom: clamp(2rem, 4vw, 3.5rem);
 
-  position: relative;
-
-  min-height: 100vh;
-  min-height: 100svh;
-
-  display: flex;
-  align-items: flex-end;
-
-  overflow: hidden;
-  isolation: isolate;
-
-  background: #211b17;
+  color: var(--hero-ink);
+  background: var(--hero-paper);
 }
 
-/* -------------------------------------------------------------------------- */
-/* Background image                                                           */
-/* -------------------------------------------------------------------------- */
-
-.heroImage {
-  position: absolute;
-  inset: 0;
-
-  z-index: -3;
-
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-  object-position: center 50%;
-
-  transform: scale(1.002);
+.hero *,
+.hero *::before,
+.hero *::after {
+  box-sizing: border-box;
 }
 
-/*
- * Keep the image looking like a photograph.
- *
- * The purpose of the overlay is only:
- * 1. make the transparent navbar readable
- * 2. create enough contrast around the copy
- *
- * Avoid colouring the entire photograph.
- */
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-
-  z-index: -2;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(24, 18, 14, 0.42) 0%,
-      rgba(24, 18, 14, 0.08) 30%,
-      rgba(24, 18, 14, 0.1) 48%,
-      rgba(24, 18, 14, 0.62) 100%
-    ),
-    linear-gradient(
-      90deg,
-      rgba(24, 18, 14, 0.52) 0%,
-      rgba(24, 18, 14, 0.24) 42%,
-      rgba(24, 18, 14, 0.04) 78%
-    );
+.container {
+  width: min(90%, 76rem);
+  margin-inline: auto;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Layout                                                                     */
-/* -------------------------------------------------------------------------- */
+/* Printed welcome */
 
-.heroContainer {
-  width: min(90%, 88rem);
+.welcome {
+  max-width: 44rem;
 
-  margin: 0 auto;
+  margin-inline: auto;
 
-  padding-top: calc(var(--nav-height, 5.25rem) + 5rem);
-  padding-bottom: clamp(4rem, 9vh, 7rem);
+  text-align: center;
 }
 
-.heroContent {
-  width: min(100%, 43rem);
+.location {
+  margin: 0 0 0.9rem;
 
-  color: var(--hero-text);
-}
+  color: var(--hero-muted);
 
-/* -------------------------------------------------------------------------- */
-/* Eyebrow                                                                    */
-/* -------------------------------------------------------------------------- */
+  font-family: var(--hero-serif);
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.6;
 
-.eyebrow {
-  margin: 0 0 1.15rem;
-
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-
-  color: rgba(255, 253, 248, 0.78);
-
-  font-size: 0.72rem;
-  font-weight: 600;
-  line-height: 1;
-
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.eyebrow span {
-  width: 2rem;
-  height: 1px;
-
-  display: inline-block;
-
-  background: rgba(255, 253, 248, 0.45);
-}
-
-/* -------------------------------------------------------------------------- */
-/* Typography                                                                 */
-/* -------------------------------------------------------------------------- */
-
-.heroTitle {
-  max-width: 42rem;
-
+.wordmark {
   margin: 0;
 
-  color: var(--hero-text);
+  color: var(--hero-ink);
 
-  /*
-   * Keep the calligraphy exclusively for the Avrofiliton wordmark.
-   * A restrained serif works much better for the main hero.
-   */
-  font-family: var(--font-display, Georgia, "Times New Roman", serif);
-
-  font-size: clamp(3rem, 6vw, 5.7rem);
+  font-family: var(--font-brand, "Segoe Script", "Brush Script MT", cursive);
+  font-size: clamp(3.4rem, 7.5vw, 6rem);
   font-weight: 400;
-  line-height: 0.98;
+  line-height: 1.3;
 
-  letter-spacing: -0.035em;
-
-  text-wrap: balance;
-
-  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.16);
+  overflow-wrap: break-word;
 }
 
-.heroText {
-  max-width: 34rem;
+.heritage {
+  margin: 0.45rem 0 0;
 
-  margin: 1.35rem 0 0;
+  color: var(--hero-accent);
 
-  color: var(--hero-text-muted);
-
-  font-size: clamp(0.98rem, 1.3vw, 1.08rem);
-  font-weight: 400;
-  line-height: 1.7;
-
-  text-wrap: pretty;
-
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.18);
+  font-family: var(--hero-serif);
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  font-style: italic;
+  line-height: 1.5;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Actions                                                                    */
-/* -------------------------------------------------------------------------- */
+/* Restrained ornament */
 
-.heroActions {
-  margin-top: 2rem;
-
+.divider {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.8rem;
+  justify-content: center;
+  gap: 0.85rem;
+
+  margin: 1.2rem auto;
 }
 
-.primaryButton,
-.secondaryButton {
-  min-height: 3rem;
+.divider::before,
+.divider::after {
+  content: "";
 
+  width: 3.5rem;
+
+  border-top: 1px solid var(--hero-rule);
+}
+
+.divider span {
+  width: 4px;
+  height: 4px;
+
+  background: var(--hero-accent);
+
+  transform: rotate(45deg);
+}
+
+.introduction {
+  max-width: 32rem;
+
+  margin: 0 auto;
+
+  color: var(--hero-muted);
+
+  font-family: var(--hero-serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.15rem);
+  line-height: 1.75;
+
+  text-wrap: pretty;
+}
+
+/* Navigation */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 2rem;
+
+  margin-top: 1.5rem;
+}
+
+.storyLink,
+.menuLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  padding: 0.8rem 1.25rem;
+  min-height: 46px;
 
-  border-radius: 0.2rem;
-
-  font-size: 0.86rem;
-  font-weight: 600;
-  line-height: 1;
-
-  letter-spacing: 0.04em;
-
-  text-decoration: none;
+  font-family: var(--hero-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
 
   transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease;
 }
 
-.primaryButton {
-  color: #fffdf8;
+.storyLink {
+  padding: 0.5rem 0.2rem;
 
-  background: var(--hero-accent);
+  color: var(--hero-accent);
+
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+}
+
+.storyLink:hover {
+  color: var(--hero-ink);
+}
+
+.menuLink {
+  padding: 0.65rem 1.65rem;
+
+  color: var(--hero-ink);
+  background: transparent;
+
   border: 1px solid var(--hero-accent);
+
+  text-decoration: none;
 }
 
-.primaryButton:hover {
-  background: var(--hero-accent-hover);
-  border-color: var(--hero-accent-hover);
-
-  transform: translateY(-1px);
+.menuLink:hover {
+  color: var(--hero-paper);
+  background: var(--hero-accent);
 }
 
-.secondaryButton {
-  color: var(--hero-text);
-
-  background: rgba(20, 15, 12, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.52);
+.storyLink:focus-visible,
+.menuLink:focus-visible {
+  outline: 2px solid var(--hero-accent);
+  outline-offset: 5px;
 }
 
-.secondaryButton:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.82);
+/* Restaurant photograph */
 
-  transform: translateY(-1px);
+.photograph {
+  margin: clamp(1.8rem, 3vw, 2.8rem) 0 0;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Accessibility                                                              */
-/* -------------------------------------------------------------------------- */
+.photoFrame {
+  padding: clamp(0.35rem, 0.7vw, 0.6rem);
 
-.primaryButton:focus-visible,
-.secondaryButton:focus-visible {
-  outline: 2px solid #fffdf8;
-  outline-offset: 4px;
+  background: var(--hero-photo-mount);
+
+  border: 1px solid var(--hero-rule);
 }
 
-/* -------------------------------------------------------------------------- */
-/* Tablet                                                                     */
-/* -------------------------------------------------------------------------- */
+.heroImage {
+  display: block;
+
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.2 / 1;
+
+  object-fit: cover;
+  object-position: center 50%;
+
+  background: #ded4c6;
+}
+
+.caption {
+  margin-top: 0.8rem;
+
+  color: var(--hero-muted);
+
+  font-family: var(--hero-serif);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.6;
+
+  text-align: center;
+}
+
+/* Tablet */
 
 @media screen and (max-width: 860px) {
-  .heroContainer {
-    width: 88%;
-
-    padding-bottom: clamp(3.5rem, 8vh, 5rem);
-  }
-
-  .heroContent {
-    width: min(100%, 38rem);
-  }
-
-  .heroOverlay {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(24, 18, 14, 0.48) 0%,
-        rgba(24, 18, 14, 0.08) 28%,
-        rgba(24, 18, 14, 0.16) 48%,
-        rgba(24, 18, 14, 0.72) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(24, 18, 14, 0.45) 0%,
-        rgba(24, 18, 14, 0.12) 100%
-      );
+  .heroImage {
+    aspect-ratio: 16 / 9;
   }
 }
 
-/* -------------------------------------------------------------------------- */
-/* Mobile                                                                     */
-/* -------------------------------------------------------------------------- */
+/* Mobile */
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 540px) {
   .hero {
-    min-height: 100svh;
+    padding-top: calc(var(--nav-height, 4.75rem) + 1.5rem);
+    padding-bottom: 2rem;
+  }
+
+  .location {
+    margin-bottom: 0.65rem;
+
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .wordmark {
+    font-size: clamp(2.8rem, 12vw, 4rem);
+    line-height: 1.3;
+  }
+
+  .heritage {
+    margin-top: 0.3rem;
+
+    font-size: 1.05rem;
+  }
+
+  .divider {
+    margin-block: 1rem;
+  }
+
+  .introduction {
+    max-width: 27rem;
+
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .actions {
+    gap: 0.75rem 1.5rem;
+
+    margin-top: 1.2rem;
+  }
+
+  .menuLink {
+    padding-inline: 1.4rem;
+  }
+
+  .photograph {
+    margin-top: 1.5rem;
   }
 
   .heroImage {
-    object-position: center;
+    aspect-ratio: 4 / 3;
   }
 
-  .heroContainer {
-    width: 90%;
-
-    padding-top: calc(var(--nav-height, 4.75rem) + 4rem);
-    padding-bottom: 2.8rem;
-  }
-
-  .eyebrow {
-    margin-bottom: 0.9rem;
-
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-  }
-
-  .eyebrow span {
-    width: 1.4rem;
-  }
-
-  .heroTitle {
-    max-width: 24rem;
-
-    font-size: clamp(2.65rem, 12vw, 4.2rem);
-    line-height: 1;
-  }
-
-  .heroText {
-    max-width: 28rem;
-
-    margin-top: 1.1rem;
-
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-
-  .heroActions {
-    margin-top: 1.6rem;
-  }
-
-  .primaryButton,
-  .secondaryButton {
-    min-height: 2.9rem;
-
-    padding-inline: 1.05rem;
-  }
-
-  .heroOverlay {
-    background: linear-gradient(
-      180deg,
-      rgba(24, 18, 14, 0.52) 0%,
-      rgba(24, 18, 14, 0.08) 26%,
-      rgba(24, 18, 14, 0.18) 45%,
-      rgba(24, 18, 14, 0.82) 100%
-    );
+  .caption {
+    font-size: 0.85rem;
   }
 }
 
-/* -------------------------------------------------------------------------- */
-/* Reduced motion                                                             */
-/* -------------------------------------------------------------------------- */
-
 @media (prefers-reduced-motion: reduce) {
-  .primaryButton,
-  .secondaryButton {
+  .storyLink,
+  .menuLink {
     transition: none;
-  }
-
-  .primaryButton:hover,
-  .secondaryButton:hover {
-    transform: none;
   }
 }

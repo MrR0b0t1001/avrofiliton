@@ -1,608 +1,388 @@
 .menu {
-  --menu-paper: #fffdf8;
-  --menu-paper-shadow: rgba(53, 41, 31, 0.12);
-  --menu-ink: #2d2924;
-  --menu-muted: #756d64;
-  --menu-accent: #995e3d;
-  --menu-rule: rgba(58, 48, 39, 0.14);
+  --menu-paper: #faf6ec;
+  --menu-background: #eae2d4;
+  --menu-ink: #382f27;
+  --menu-muted: #706153;
+  --menu-accent: #794531;
+  --menu-rule: #c6b69e;
+  --menu-serif: Georgia, "Times New Roman", serif;
 
-  padding: clamp(4.5rem, 7vw, 6.5rem) 0;
+  padding: clamp(3rem, 6vw, 6rem) 1rem;
 
-  overflow: hidden;
-
-  background: #eee6d9;
   color: var(--menu-ink);
+  background: var(--menu-background);
+
+  scroll-margin-top: calc(var(--nav-height, 5.25rem) + 1rem);
 }
 
-.container {
-  width: min(90%, 88rem);
-
-  margin: 0 auto;
+.menu *,
+.menu *::before,
+.menu *::after {
+  box-sizing: border-box;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Intro                                                                      */
-/* -------------------------------------------------------------------------- */
+/* The printed menu */
 
-.intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 28rem);
-  align-items: end;
-  gap: clamp(1.5rem, 4vw, 4rem);
+.paper {
+  width: min(100%, 72rem);
 
-  margin-bottom: clamp(1.8rem, 3vw, 2.6rem);
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 4.5rem);
+
+  background: var(--menu-paper);
+
+  border: 1px solid var(--menu-rule);
+  outline: 1px solid var(--menu-rule);
+  outline-offset: -8px;
 }
 
-.eyebrow {
-  margin: 0 0 0.7rem;
+/* Restaurant heading */
+
+.header {
+  max-width: 38rem;
+  margin-inline: auto;
+
+  text-align: center;
+}
+
+.location {
+  margin: 0 0 1rem;
+
+  font-family: var(--menu-serif);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.6;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.restaurant {
+  margin: 0;
+
+  font-family: var(--menu-serif);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  font-weight: 400;
+  line-height: 1.1;
+
+  letter-spacing: -0.035em;
+}
+
+.since {
+  margin: 0.7rem 0 0;
+
+  color: var(--menu-muted);
+
+  font-family: var(--menu-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Small typographic divider */
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  margin: 1.6rem auto 1.4rem;
 
   color: var(--menu-accent);
+}
 
-  font-size: 0.68rem;
-  font-weight: 600;
-  line-height: 1;
+.ornament::before,
+.ornament::after {
+  content: "";
 
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  width: 4.5rem;
+
+  border-top: 1px solid var(--menu-rule);
+}
+
+.ornament span {
+  width: 5px;
+  height: 5px;
+
+  background: currentColor;
+
+  transform: rotate(45deg);
 }
 
 .title {
   margin: 0;
 
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+  font-family: var(--menu-serif);
+  font-size: clamp(1.6rem, 3vw, 2rem);
   font-weight: 400;
-  line-height: 1;
-
-  letter-spacing: -0.03em;
-}
-
-.introText {
-  max-width: 28rem;
-
-  margin: 0;
-
-  color: var(--menu-muted);
-
-  font-size: 0.95rem;
-  line-height: 1.65;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Categories                                                                 */
-/* -------------------------------------------------------------------------- */
-
-.categories {
-  display: flex;
-  align-items: center;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-
-  margin-bottom: 1.2rem;
-  padding-bottom: 0.7rem;
-
-  overflow-x: auto;
-
-  border-bottom: 1px solid var(--menu-rule);
-
-  scrollbar-width: none;
-}
-
-.categories::-webkit-scrollbar {
-  display: none;
-}
-
-.category {
-  position: relative;
-
-  flex: 0 0 auto;
-
-  padding: 0 0 0.7rem;
-
-  color: var(--menu-muted);
-
-  border: 0;
-
-  background: transparent;
-
-  font: inherit;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1;
-
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-
-  cursor: pointer;
-
-  transition: color 180ms ease;
-}
-
-.category::after {
-  content: "";
-
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-
-  width: 100%;
-  height: 1px;
-
-  background: var(--menu-accent);
-
-  transform: scaleX(0);
-  transform-origin: left;
-
-  transition: transform 180ms ease;
-}
-
-.category:hover {
-  color: var(--menu-ink);
-}
-
-.categoryActive {
-  color: var(--menu-accent);
-}
-
-.categoryActive::after {
-  transform: scaleX(1);
-}
-
-/* -------------------------------------------------------------------------- */
-/* Menu book                                                                  */
-/* -------------------------------------------------------------------------- */
-
-.menuStage {
-  position: relative;
-}
-
-.pages {
-  display: flex;
-
-  overflow-x: auto;
-  overflow-y: hidden;
-
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-
-  background: #ddd3c4;
-
-  box-shadow:
-    0 24px 70px rgba(55, 43, 32, 0.12),
-    0 2px 8px rgba(55, 43, 32, 0.08);
-
-  scrollbar-width: none;
-}
-
-.pages::-webkit-scrollbar {
-  display: none;
-}
-
-/*
- * Two pages are visible at once on desktop.
- * This keeps the visual language of an open physical menu.
- */
-.page {
-  position: relative;
-
-  min-width: 50%;
-  min-height: 43rem;
-
-  display: flex;
-  flex-direction: column;
-
-  padding: clamp(2.4rem, 4vw, 4.2rem);
-
-  scroll-snap-align: start;
-
-  background:
-    linear-gradient(rgba(255, 253, 248, 0.96), rgba(255, 253, 248, 0.96)),
-    radial-gradient(circle at 20% 20%, rgba(153, 94, 61, 0.04), transparent 30%);
-}
-
-/*
- * Creates the subtle centre seam of an open menu without
- * making the component look like a fake old book.
- */
-.page:nth-child(odd) {
-  border-right: 1px solid rgba(74, 59, 46, 0.12);
-
-  box-shadow: inset -18px 0 24px -26px rgba(48, 37, 29, 0.45);
-}
-
-.page:nth-child(even) {
-  box-shadow: inset 18px 0 24px -26px rgba(48, 37, 29, 0.45);
-}
-
-/* -------------------------------------------------------------------------- */
-/* Page heading                                                               */
-/* -------------------------------------------------------------------------- */
-
-.pageHeader {
-  display: grid;
-  grid-template-columns: 2rem 1fr;
-  gap: 1.1rem;
-
-  padding-bottom: 1.25rem;
-
-  border-bottom: 1px solid var(--menu-rule);
-}
-
-.pageNumber {
-  color: var(--menu-accent);
-
-  font-family: var(--font-display);
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.pageLabel {
-  margin: 0 0 0.45rem;
-
-  color: var(--menu-muted);
-
-  font-size: 0.56rem;
-  font-weight: 600;
-
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.pageTitle {
-  margin: 0;
-
-  font-family: var(--font-display);
-  font-size: clamp(1.65rem, 2.2vw, 2.2rem);
-  font-weight: 400;
-  line-height: 1;
-
-  letter-spacing: -0.02em;
-}
-
-.pageSubtitle {
-  margin: 0.45rem 0 0;
-
-  color: var(--menu-muted);
-
-  font-size: 0.8rem;
-  font-style: italic;
-  line-height: 1.45;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Dishes                                                                     */
-/* -------------------------------------------------------------------------- */
-
-.dishes {
-  display: flex;
-  flex-direction: column;
-
-  margin-top: 0.8rem;
-}
-
-.dish {
-  padding: 1.25rem 0;
-
-  border-bottom: 1px solid var(--menu-rule);
-}
-
-.dish:last-child {
-  border-bottom: 0;
-}
-
-.dishName {
-  margin: 0;
-
-  font-family: var(--font-display);
-  font-size: 1.18rem;
-  font-weight: 500;
   line-height: 1.2;
-
-  letter-spacing: -0.01em;
 }
 
-.dishDescription {
-  margin: 0.4rem 0 0;
+.intro {
+  max-width: 29rem;
+
+  margin: 0.9rem auto 0;
 
   color: var(--menu-muted);
 
-  font-size: 0.8rem;
-  line-height: 1.5;
-
-  letter-spacing: 0.01em;
+  font-family: var(--menu-serif);
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Page footer                                                                */
-/* -------------------------------------------------------------------------- */
+/* Simple contents line */
 
-.pageFooter {
-  margin-top: auto;
-  padding-top: 1.6rem;
-
+.index {
   display: flex;
-  justify-content: space-between;
-
-  color: var(--menu-muted);
-
-  font-size: 0.58rem;
-  font-weight: 600;
-
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Controls                                                                   */
-/* -------------------------------------------------------------------------- */
-
-.controls {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 1.4rem;
+  column-gap: 1.5rem;
 
-  margin-top: 1.5rem;
+  margin-top: 2rem;
+  padding-block: 0.65rem;
+
+  border-block: 1px solid var(--menu-rule);
 }
 
-.arrow {
-  width: 3rem;
-  height: 3rem;
-
+.indexLink {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
 
-  padding: 0;
+  min-height: 44px;
 
-  color: var(--menu-ink);
-
-  border: 1px solid rgba(58, 48, 39, 0.22);
-  border-radius: 50%;
-
-  background: transparent;
-
-  cursor: pointer;
-
-  transition:
-    color 180ms ease,
-    border-color 180ms ease,
-    transform 180ms ease,
-    opacity 180ms ease;
-}
-
-.arrow svg {
-  width: 1.15rem;
-  height: 1.15rem;
-
-  fill: none;
-  stroke: currentColor;
-
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.arrow:hover:not(:disabled) {
   color: var(--menu-accent);
 
-  border-color: var(--menu-accent);
+  font-family: var(--menu-serif);
+  font-size: 1rem;
+  line-height: 1.4;
 
-  transform: translateY(-1px);
+  text-decoration: none;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
 }
 
-.arrow:disabled {
-  opacity: 0.28;
-
-  cursor: default;
+.indexLink:hover {
+  text-decoration: underline;
 }
 
-.counter {
-  min-width: 6rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-
-  margin: 0;
-
-  color: var(--menu-muted);
-
-  font-size: 0.65rem;
-  font-weight: 600;
-
-  letter-spacing: 0.14em;
-}
-
-.counterLine {
-  width: 1.7rem;
-  height: 1px;
-
-  background: rgba(58, 48, 39, 0.28);
-}
-
-.note {
-  margin: 1rem 0 0;
-
-  color: var(--menu-muted);
-
-  font-size: 0.68rem;
-  line-height: 1.5;
-  text-align: center;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Focus                                                                      */
-/* -------------------------------------------------------------------------- */
-
-.category:focus-visible,
-.arrow:focus-visible {
+.indexLink:focus-visible {
   outline: 2px solid var(--menu-accent);
   outline-offset: 4px;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Tablet                                                                     */
-/* -------------------------------------------------------------------------- */
+/* Menu categories */
 
-@media screen and (max-width: 860px) {
-  .intro {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+.categories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  .introText {
-    max-width: 34rem;
-  }
+  column-gap: clamp(2.5rem, 6vw, 5.5rem);
+  row-gap: 2.8rem;
 
-  .page {
-    min-height: 40rem;
-
-    padding: 2.3rem;
-  }
-
-  .pageTitle {
-    font-size: 1.9rem;
-  }
+  margin-top: 2.8rem;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Mobile                                                                     */
-/* -------------------------------------------------------------------------- */
+.category {
+  min-width: 0;
 
-@media screen and (max-width: 640px) {
+  scroll-margin-top: calc(var(--nav-height, 5.25rem) + 1.5rem);
+
+  break-inside: avoid;
+}
+
+.categoryHeader {
+  padding-bottom: 0.85rem;
+
+  border-bottom: 1px solid var(--menu-rule);
+}
+
+.categoryTitle {
+  margin: 0;
+
+  color: var(--menu-accent);
+
+  font-family: var(--menu-serif);
+  font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.categorySubtitle {
+  margin: 0.45rem 0 0;
+
+  color: var(--menu-muted);
+
+  font-family: var(--menu-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Dish listings */
+
+.dishes {
+  margin: 1.3rem 0 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.dish {
+  margin: 0 0 1.3rem;
+
+  break-inside: avoid;
+}
+
+.dish:last-child {
+  margin-bottom: 0;
+}
+
+.dishHeading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+.dishName {
+  min-width: 0;
+  margin: 0;
+
+  font-family: var(--menu-serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.4;
+
+  overflow-wrap: break-word;
+}
+
+.dishDescription {
+  margin: 0.25rem 0 0;
+
+  color: var(--menu-muted);
+
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 0.9rem;
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+}
+
+/* Appears only when a dish has a price */
+
+.dishLeader {
+  flex: 1;
+  min-width: 0.7rem;
+
+  border-bottom: 1px dotted var(--menu-rule);
+}
+
+.dishPrice {
+  flex-shrink: 0;
+
+  margin-left: auto;
+
+  font-family: var(--menu-serif);
+  font-size: 1rem;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+
+  white-space: nowrap;
+}
+
+/* Closing line */
+
+.footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+
+  color: var(--menu-muted);
+
+  border-top: 1px solid var(--menu-rule);
+
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+
+  font-family: var(--menu-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Mobile */
+
+@media screen and (max-width: 700px) {
   .menu {
-    padding: 4rem 0;
+    padding: 2.5rem 0.75rem;
   }
 
-  .container {
-    width: 90%;
+  .paper {
+    padding: 2.5rem 1.5rem;
   }
 
-  .intro {
-    margin-bottom: 1.6rem;
+  .location {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
   }
 
-  .eyebrow {
-    margin-bottom: 0.55rem;
+  .index {
+    column-gap: 1.2rem;
 
-    font-size: 0.64rem;
-  }
-
-  .title {
-    font-size: clamp(2.1rem, 10vw, 2.8rem);
-  }
-
-  .introText {
-    font-size: 0.9rem;
-    line-height: 1.6;
+    margin-top: 1.5rem;
   }
 
   .categories {
-    margin-right: -5vw;
-    margin-bottom: 1rem;
+    grid-template-columns: 1fr;
+    row-gap: 2.4rem;
 
-    padding-right: 5vw;
+    margin-top: 2rem;
   }
 
-  .category {
-    font-size: 0.68rem;
-  }
-
-  /*
-   * Mobile becomes one menu page per swipe.
-   */
-  .page {
-    min-width: 100%;
-    min-height: 38rem;
-
-    padding: 1.8rem 1.5rem;
-  }
-
-  .page:nth-child(odd),
-  .page:nth-child(even) {
-    border-right: 0;
-    box-shadow: none;
-  }
-
-  .pageHeader {
-    grid-template-columns: 1.6rem 1fr;
-    gap: 0.8rem;
-
-    padding-bottom: 1rem;
-  }
-
-  .pageNumber {
-    font-size: 0.9rem;
-  }
-
-  .pageLabel {
-    margin-bottom: 0.4rem;
-
-    font-size: 0.52rem;
-  }
-
-  .pageTitle {
-    font-size: 1.8rem;
-  }
-
-  .pageSubtitle {
-    margin-top: 0.4rem;
-
-    font-size: 0.76rem;
-  }
-
-  .dishes {
-    margin-top: 0.6rem;
-  }
-
-  .dish {
-    padding: 1.05rem 0;
-  }
-
-  .dishName {
-    font-size: 1.08rem;
-  }
-
-  .dishDescription {
-    margin-top: 0.35rem;
-
-    font-size: 0.77rem;
-    line-height: 1.45;
-  }
-
-  .controls {
-    margin-top: 1.3rem;
-  }
-
-  .arrow {
-    width: 2.8rem;
-    height: 2.8rem;
-  }
-
-  .note {
-    margin-top: 0.9rem;
-
-    font-size: 0.64rem;
+  .footer {
+    margin-top: 2.5rem;
   }
 }
 
-/* -------------------------------------------------------------------------- */
-/* Reduced motion                                                             */
-/* -------------------------------------------------------------------------- */
+/* Printed output */
 
-@media (prefers-reduced-motion: reduce) {
-  .pages {
-    scroll-behavior: auto;
+@media print {
+  .menu {
+    padding: 0;
+
+    background: white;
   }
 
-  .category,
-  .category::after,
-  .arrow {
-    transition: none;
+  .paper {
+    width: 100%;
+    padding: 0;
+
+    background: white;
+
+    border: 0;
+    outline: 0;
   }
 
-  .arrow:hover:not(:disabled) {
-    transform: none;
+  .index {
+    display: none;
+  }
+
+  .categories {
+    gap: 1.5rem 2rem;
+  }
+
+  .category {
+    scroll-margin-top: 0;
+  }
+
+  .dishDescription,
+  .categorySubtitle,
+  .intro,
+  .since,
+  .footer {
+    color: var(--menu-ink);
   }
 }

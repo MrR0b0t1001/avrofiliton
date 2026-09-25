@@ -1,189 +1,429 @@
 .about {
-  padding: clamp(5rem, 10vw, 8rem) 0;
+  --about-paper: #f7f2e9;
+  --about-ink: #382f27;
+  --about-muted: #706255;
+  --about-accent: #855339;
+  --about-rule: #cbbca7;
+  --about-photo-border: #ded2bf;
+  --about-serif: Georgia, "Times New Roman", serif;
 
-  background: var(--color-background);
-  color: var(--color-text);
+  padding-block: clamp(4rem, 8vw, 7rem);
+
+  color: var(--about-ink);
+  background: var(--about-paper);
+
+  scroll-margin-top: calc(var(--nav-height, 5.25rem) + 1rem);
+}
+
+.about *,
+.about *::before,
+.about *::after {
+  box-sizing: border-box;
 }
 
 .container {
-  width: min(90%, 88rem);
-
-  margin: 0 auto;
+  width: min(90%, 72rem);
+  margin-inline: auto;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Intro                                                                      */
-/* -------------------------------------------------------------------------- */
+/* Opening */
 
 .intro {
-  max-width: 48rem;
+  max-width: 47rem;
 
-  margin-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  margin-inline: auto;
+
+  text-align: center;
 }
 
 .eyebrow {
-  margin: 0 0 1rem;
+  margin: 0 0 1.2rem;
 
-  color: var(--color-accent);
+  color: var(--about-accent);
 
-  font-size: 0.72rem;
-  font-weight: 600;
-  line-height: 1;
-
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-family: var(--about-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
 }
 
 .title {
   margin: 0;
 
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 5vw, 4.6rem);
+  font-family: var(--about-serif);
+  font-size: clamp(2.7rem, 5.5vw, 4.7rem);
   font-weight: 400;
-  line-height: 1.02;
+  line-height: 1.1;
 
-  letter-spacing: -0.03em;
-
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 
 .introText {
-  max-width: 40rem;
+  max-width: 36rem;
 
-  margin: 1.5rem 0 0;
+  margin: 1.5rem auto 0;
 
-  color: var(--color-text-muted);
+  color: var(--about-muted);
 
-  font-size: 1.02rem;
-  line-height: 1.75;
+  font-family: var(--about-serif);
+  font-size: clamp(1.1rem, 1.7vw, 1.25rem);
+  line-height: 1.8;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Story                                                                      */
-/* -------------------------------------------------------------------------- */
+/* The history */
 
-.timeline {
-  border-top: 1px solid var(--color-border);
-}
-
-.storyItem {
+.history {
   display: grid;
-  grid-template-columns: minmax(8rem, 12rem) 1fr;
-  gap: clamp(1.5rem, 4vw, 4rem);
+  grid-template-columns:
+    minmax(8rem, 0.55fr)
+    minmax(0, 2fr);
 
-  padding: 2rem 0;
+  align-items: start;
+  gap: clamp(2rem, 5vw, 5rem);
 
-  border-bottom: 1px solid var(--color-border);
+  max-width: 58rem;
+
+  margin: clamp(3rem, 6vw, 5rem) auto 0;
+  padding-top: clamp(2rem, 4vw, 3rem);
+
+  border-top: 1px solid var(--about-rule);
 }
 
-.storyYear {
+.historyMargin {
+  padding-top: 0.1rem;
+}
+
+.year {
   margin: 0;
 
-  color: var(--color-accent);
+  color: var(--about-accent);
 
-  font-family: var(--font-display);
-  font-size: 1.45rem;
-  font-weight: 500;
-  line-height: 1.2;
+  font-family: var(--about-serif);
+  font-size: clamp(2.8rem, 4.5vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+
+  letter-spacing: -0.04em;
 }
 
-.storyContent {
-  max-width: 45rem;
+.yearCaption {
+  margin: 0.8rem 0 0;
+
+  color: var(--about-muted);
+
+  font-family: var(--about-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.6;
 }
 
-.storyTitle {
+.historyContent {
+  min-width: 0;
+}
+
+.chapterTitle {
+  margin: 0 0 1.2rem;
+
+  font-family: var(--about-serif);
+  font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+  font-weight: 400;
+  line-height: 1.3;
+
+  text-wrap: balance;
+}
+
+.historyContent > p,
+.prose p {
   margin: 0;
 
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.2vw, 2rem);
-  font-weight: 500;
-  line-height: 1.2;
+  color: var(--about-muted);
+
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 1rem;
+  line-height: 1.85;
 }
 
-.storyText {
-  margin: 0.75rem 0 0;
-
-  color: var(--color-text-muted);
-
-  font-size: 0.98rem;
-  line-height: 1.7;
+.historyContent > p + p,
+.prose p + p {
+  margin-top: 1.1rem;
 }
 
-/* -------------------------------------------------------------------------- */
-/* People                                                                     */
-/* -------------------------------------------------------------------------- */
+/* Family photograph and present-day story */
 
-.people {
+.family {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns:
+    minmax(0, 1.3fr)
+    minmax(0, 1fr);
 
-  margin-top: clamp(4rem, 8vw, 6rem);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+
+  margin-top: clamp(3.5rem, 7vw, 6rem);
 }
 
-.feature {
-  background: var(--color-surface);
+.familyPortrait,
+.alekosPortrait {
+  min-width: 0;
+  margin: 0;
 }
 
-.featureImage {
-  aspect-ratio: 4 / 3;
+.photoFrame {
+  padding: 0.45rem;
 
-  overflow: hidden;
-
-  background: #ded6ca;
+  border: 1px solid var(--about-photo-border);
 }
 
-.featureImage img {
+.familyImage,
+.alekosImage {
+  display: block;
+
   width: 100%;
-  height: 100%;
+  height: auto;
 
   object-fit: cover;
+
+  background: #e2d9ca;
 }
 
-.featureContent {
-  padding: 1.6rem;
+.familyImage {
+  aspect-ratio: 4 / 3;
+
+  object-position: center;
 }
 
-.featureLabel {
-  margin: 0 0 0.65rem;
+.caption {
+  margin-top: 0.8rem;
 
-  color: var(--color-accent);
+  color: var(--about-muted);
 
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-family: var(--about-serif);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.6;
+}
 
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+.familyContent,
+.alekosContent {
+  min-width: 0;
+}
+
+.chapterLabel {
+  margin: 0 0 0.8rem;
+
+  color: var(--about-accent);
+
+  font-family: var(--about-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
 }
 
 .featureTitle {
   margin: 0;
 
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 500;
-  line-height: 1.1;
+  font-family: var(--about-serif);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+
+  letter-spacing: -0.025em;
+  text-wrap: balance;
 }
 
-.featureText {
-  margin: 0.9rem 0 0;
+.prose {
+  margin-top: 1.3rem;
+}
 
-  color: var(--color-text-muted);
+/* Alekos has a smaller, distinct portrait and his own passage */
 
+.alekos {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.6fr)
+    minmax(0, 1fr);
+
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+
+  max-width: 57rem;
+
+  margin: clamp(3.5rem, 7vw, 6rem) auto 0;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+
+  border-top: 1px solid var(--about-rule);
+}
+
+.alekosPortrait {
+  grid-column: 2;
+  grid-row: 1;
+
+  width: 100%;
+  max-width: 20rem;
+
+  justify-self: end;
+}
+
+.alekosImage {
+  aspect-ratio: 4 / 5;
+
+  object-position: center;
+}
+
+.alekosContent {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Closing line */
+
+.closing {
+  max-width: 42rem;
+
+  margin: clamp(3rem, 6vw, 5rem) auto 0;
+
+  text-align: center;
+}
+
+.closingRule {
+  display: block;
+
+  width: 4rem;
+
+  margin: 0 auto 1.5rem;
+
+  border-top: 1px solid var(--about-rule);
+}
+
+.closing p {
+  margin: 0;
+
+  color: var(--about-muted);
+
+  font-family: var(--about-serif);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-style: italic;
   line-height: 1.7;
+
+  text-wrap: balance;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Responsive                                                                 */
-/* -------------------------------------------------------------------------- */
+/* Tablet */
 
-@media screen and (max-width: 760px) {
-  .storyItem {
-    grid-template-columns: 1fr;
-    gap: 0.7rem;
+@media screen and (max-width: 960px) {
+  .family {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    align-items: start;
+    gap: 2rem;
   }
 
-  .people {
-    grid-template-columns: 1fr;
+  .familyImage {
+    aspect-ratio: 1 / 1;
+  }
+
+  .alekos {
+    gap: 2.5rem;
+  }
+}
+
+/* Mobile */
+
+@media screen and (max-width: 700px) {
+  .about {
+    padding-block: 3.5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.95rem;
+  }
+
+  .title {
+    font-size: clamp(2.5rem, 9vw, 3.5rem);
+  }
+
+  .introText {
+    margin-top: 1.2rem;
+
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .history {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.8rem;
+
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+  }
+
+  .historyMargin {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    padding: 0;
+  }
+
+  .year {
+    font-size: 3rem;
+  }
+
+  .yearCaption {
+    margin: 0;
+
+    font-size: 0.9rem;
+  }
+
+  .historyContent > p,
+  .prose p {
+    font-size: 0.96rem;
+    line-height: 1.8;
+  }
+
+  .family {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.8rem;
+
+    margin-top: 3rem;
+  }
+
+  .familyImage {
+    aspect-ratio: 4 / 3;
+  }
+
+  .featureTitle {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
+  .alekos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.8rem;
+
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+  }
+
+  .alekosPortrait {
+    grid-column: auto;
+    grid-row: auto;
+
+    width: min(80%, 20rem);
+
+    justify-self: start;
+  }
+
+  .alekosContent {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .closing {
+    margin-top: 3rem;
+  }
+
+  .desktopBreak {
+    display: none;
   }
 }
